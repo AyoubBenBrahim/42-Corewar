@@ -16,7 +16,7 @@ typedef enum			e_boolean
 typedef struct		s_player
 {
 	int					id;
-	// unsigned int	magic_header;
+	// unsigned int		magic_header;
 	char				*associated_file;
 	char				prog_name[PROG_NAME_LENGTH + 1];
 	char				comment[COMMENT_LENGTH + 1];
@@ -49,7 +49,6 @@ typedef struct		s_vm
 	int					cycles;
 	int					cycles_to_die;
 	int					cycles_after_check;
-	int					check;
 
 }					t_vm;
 
