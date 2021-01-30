@@ -17,13 +17,13 @@ typedef enum			e_boolean
 
 typedef struct		s_player
 {
-	int				id;
+	int					id;
 	// unsigned int	magic_header;
-	char			prog_name[PROG_NAME_LENGTH + 1];
-	char			comment[COMMENT_LENGTH + 1];
-	char			exec_code[MEM_SIZE];
-	unsigned int	exec_code_size;
-	char			*associated_file;
+	char				prog_name[PROG_NAME_LENGTH + 1];
+	char				comment[COMMENT_LENGTH + 1];
+	char				exec_code[MEM_SIZE];
+	unsigned int		exec_code_size;
+	char				*associated_file;
 	struct s_player		*next;
 }					t_player;
 
@@ -35,7 +35,7 @@ typedef struct	 s_cursors // s_process
 	int				last_live;
 	int				wait_cycles;
 	int				jump;
-	t_player			*player;
+	t_player		*player;
 	struct s_cursor		*next;
 }		t_cursor;
 
