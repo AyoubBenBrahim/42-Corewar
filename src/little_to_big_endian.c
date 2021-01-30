@@ -6,20 +6,6 @@ unsigned int little_to_big_endian(unsigned int x);
 uint32_t    swap_uint32(uint32_t d);
 uint32_t    other_method(uint32_t a);
 
-// int main( )
-// {
-// 	int Little_Endian = 0xAABBCCDD ;
-
-// 	printf("\n Little_Endian = %d\n", Little_Endian);
-
-// 	printf("\n Little_Endian = 0x%X\n", Little_Endian);
-
-// 	printf("\n Big_Endian    = 0x%X\n", little_to_big_endian(Little_Endian));
-
-// 	printf("\n Big_Endian    = 0x%X\n", swap_uint32(Little_Endian));
-
-// 	printf("\n Big_Endian    = 0x%X\n", other_method(Little_Endian));
-// }
 
 unsigned int little_to_big_endian(unsigned int x)
 {
@@ -43,3 +29,18 @@ uint32_t    other_method(uint32_t a)
 	a = ((a & (0x00FF00FF)) << 8) | ((a & (0xFF00FF00)) >> 8);
 	return a;
 }
+
+// int main( )
+// {
+// 	int Little_Endian = 0xAABBCCDD ;
+
+// 	printf("\n Little_Endian = %d\n", Little_Endian);
+
+// 	printf("\n Little_Endian = 0x%X\n", Little_Endian);
+
+// 	printf("\n Big_Endian    = 0x%X\n", little_to_big_endian(Little_Endian));
+
+// 	printf("\n Big_Endian    = 0x%X\n", swap_uint32(Little_Endian));
+
+// 	printf("\n Big_Endian    = 0x%X\n", other_method(Little_Endian));
+// }

@@ -1,6 +1,4 @@
 
-
-
 #ifndef COR_H
 # define COR_H
 
@@ -19,11 +17,11 @@ typedef struct		s_player
 {
 	int					id;
 	// unsigned int	magic_header;
+	char				*associated_file;
 	char				prog_name[PROG_NAME_LENGTH + 1];
 	char				comment[COMMENT_LENGTH + 1];
 	char				exec_code[MEM_SIZE];
 	unsigned int		exec_code_size;
-	char				*associated_file;
 	struct s_player		*next;
 }					t_player;
 
@@ -41,10 +39,9 @@ typedef struct	 s_cursors // s_process
 
 typedef struct		s_vm
 {
-	char				**file;
 	unsigned char		colosseum[MEM_SIZE];
-	// t_player			players[MAX_PLAYERS + 1];
 	t_player			*players;
+	t_player			*tail;
 	int					nbr_of_players;;
 	t_player			*last_alive;
 	t_cursor			*cursors;
