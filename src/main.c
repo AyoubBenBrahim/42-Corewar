@@ -59,36 +59,29 @@ void		get_player(t_player *ply, int id)
 	printf("done\n\n");
 }
 
-
-
 void	parse_args(int argc, char **argv, t_vm *vm)
 {
 	int			ac;
 	char		*cor;
 	int			nbr_of_players;
-	// t_player	players;
-
 
 	ac = 1;
 	vm->nbr_of_players = 0;
-	// vm->file = (char **)malloc(sizeof(char *) * MAX_PLAYERS);
 	while (ac < argc)
 	{
 		if (!ft_strcmp("-v", argv[ac]))
 		{
 			printf("flag -v\n");
-			// parse_arg_verbose(argc, argv, vm, &ac);
+			// parse_arg_verbose();
 		}
 		else if (!ft_strcmp("-dump", argv[ac]))
 		{
 			printf("flag -dump\n");
-			// parse_arg_dump(argc, argv, vm, &ac);// pass ac + 1
+			// parse_arg_dump();// pass ac + 1
 		}
 		else if ((cor = ft_strstr(argv[ac], ".cor")) && cor != argv[ac] && !cor[4])
 		{
 			printf("%s \n", argv[ac]);
-			// vm->file[vm->nbr_of_players] = (char *)malloc(sizeof(char) * ft_strlen(argv[ac] + 1));
-			// ft_strcpy(vm->file[vm->nbr_of_players], argv[ac]);
 			vm->nbr_of_players++;
 			if (vm->nbr_of_players > MAX_PLAYERS)
 			{
@@ -126,13 +119,8 @@ void	parse_args(int argc, char **argv, t_vm *vm)
 			ft_putstr("Error: invalid parameters \n");
 			exit(0);
 		}
-		// vm->file[vm->nbr_of_players] = NULL;
 		ac++;
 	}
-
-	//  while (*vm->file)
-	// 	 printf("|%s|\n", *vm->file++);
-
 }
 
 int			main(int ac, char **av)
@@ -143,6 +131,7 @@ int			main(int ac, char **av)
 
 	// vm_init(&vm);
 	parse_args(ac, av, &vm);
+
 	// let_the_game_begin();
 
 	printf("nbr players = %d\n", vm.nbr_of_players);
