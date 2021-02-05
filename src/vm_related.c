@@ -5,8 +5,8 @@
 void vm_init(t_vm *vm)
 {
 
-	vm->colosseum = (uint8_t *)malloc(sizeof(uint8_t) * MEM_SIZE + 1);
-	ft_bzero(&vm->colosseum, sizeof(vm->colosseum));
+	vm->colosseum = (uint8_t *)malloc(sizeof(uint8_t) * (MEM_SIZE + 1));
+	ft_bzero(vm->colosseum, sizeof(vm->colosseum));
 
 
 

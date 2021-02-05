@@ -25,8 +25,8 @@ t_cursor	*init_cursor(t_vm *vm, int id, int mem_zone)
 		exit(0);
 	}
 	ft_bzero(cursor, sizeof(t_cursor));
-printf("seg fault here\n");
-	// ft_memcpy(&vm->colosseum[mem_zone], gldtor->exec_code, gldtor->exec_code_size);
+	// printf("%p mem_zone : %d size to write : %d\n\n",vm->colosseum, mem_zone ,gldtor->exec_code_size);
+	ft_memcpy(&(vm->colosseum[mem_zone]), gldtor->exec_code, gldtor->exec_code_size);
 
 	cursor->id = id;
 	cursor->carry = FALSE;
