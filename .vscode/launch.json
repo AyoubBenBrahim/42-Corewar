@@ -8,9 +8,7 @@
 		   // "program": "${workspaceFolder}/your_exe_here",
 		   "program": "${workspaceFolder}/cor",
             "args": [
-				"batman.cor"
-				"Car.cor.cor"
-				"batman.cor"
+               " batman.cor" "Voldemort.cor" "zork.cor" "turtle.cor"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

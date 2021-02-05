@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cor.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aybouras <aybouras@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/02 11:44:08 by aybouras          #+#    #+#             */
+/*   Updated: 2021/02/02 11:44:19 by aybouras         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 #ifndef COR_H
 # define COR_H
@@ -5,7 +17,11 @@
 # include <stdlib.h>
 # include "op.h"
 # include "../libft/libft.h"
+# include <fcntl.h>
+# include <stdio.h> // ************* delete
+# include <unistd.h>
 
+#define HEADER_SIZE (16 + PROG_NAME_LENGTH + COMMENT_LENGTH)
 
 typedef enum			e_boolean
 {
@@ -13,45 +29,58 @@ typedef enum			e_boolean
 	TRUE,
 }						t_boolean;
 
-typedef struct		s_player
+typedef struct		s_gladiator
 {
 	int					id;
-	// unsigned int		magic_header;
 	char				*associated_file;
 	char				prog_name[PROG_NAME_LENGTH + 1];
 	char				comment[COMMENT_LENGTH + 1];
 	char				exec_code[MEM_SIZE];
-	unsigned int		exec_code_size;
-	struct s_player		*next;
-}					t_player;
+	uint32_t			exec_code_size;
+	struct s_gladiator	*next;
+}						t_gladiator;
 
-typedef struct	 s_cursors // s_process
+typedef struct	 s_cursor
 {
 	int				id;
+	uint32_t		current_addr;
 	t_boolean		carry;
 	int				op_code; // operation code
 	int				last_live;
 	int				wait_cycles;
 	int				jump;
-	t_player		*player;
-	struct s_cursor		*next;
+	int				reg[REG_NUMBER];	// register
+	// t_gladiator		*gladiator; // not needed
+	struct s_cursor	*next;
 }		t_cursor;
 
 typedef struct		s_vm
 {
-	unsigned char		colosseum[MEM_SIZE];
-	t_player			*players;
-	t_player			*tail;
-	int					nbr_of_players;;
-	t_player			*last_alive;
-	t_cursor			*cursors;
-	int					lives_num;
-	int					cycles;
-	int					cycles_to_die;
-	int					cycles_after_check;
+	uint8_t			*colosseum;
+	t_gladiator		*gladiators;
+	t_gladiator		*tail;
+	int				nbr_of_gldtors;
+	t_gladiator		*last_survivor;
+	t_cursor		*cursors; // list of process
+	int				cursors_counter;
+	int				lives_num;
+	int				cycles;
+	int				cycles_to_die;
+	int				cycles_after_check;
 
 }					t_vm;
 
-unsigned int little_to_big_endian(unsigned int x);
+uint32_t		little_to_big_endian(unsigned int x);
+void			vm_init(t_vm *vm);
+void			parse_args(int argc, char **argv, t_vm *vm);
+void			get_player(t_gladiator *gldtor, int id);
+t_gladiator		*get_gldtor_by_id(t_gladiator *gldtor_lst, int id);
+t_cursor		*init_cursor(t_vm *vm, int id, int mem_zone);
+void			load_cursor(t_cursor **curs_list, t_cursor *new);
+void			prepare_battleground(t_vm	*vm);
+
+
+
+
 
 #endif

@@ -10,144 +10,64 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <stdio.h> // ************* delete
-#include <unistd.h>
 
 # include "../inc/cor.h"
 
-#define HEADER_SIZE (16 + PROG_NAME_LENGTH + COMMENT_LENGTH)
 
-void		get_player(t_player *ply, int id)
-{
-	int		fd;
-	uint32_t	size;
-	// size_t	bytes_to_copy;
-	uint8_t	buffer[4096];
+// t_cor  *get_cor(t_cor *oo)
+// {
+// 	static t_cor *p
 
-	if ((fd = open(ply->associated_file, O_RDONLY)) < 0)
-	{
-		printf("%s is an Invalid file.\n", ply->associated_file);
-		exit(0);
-	}
-	if (read(fd, &buffer, HEADER_SIZE) < HEADER_SIZE)
-	{
-		printf("%s has an Invalid header.\n", ply->associated_file);
-		exit(0);
-	}
-	if (*(uint32_t *)buffer != little_to_big_endian(COREWAR_EXEC_MAGIC))
-	{
-		printf("%s has an invalid magic Header.\n", ply->associated_file);
-		exit(0);
-	}
-	ft_memcpy((void*)(ply->prog_name), buffer + sizeof(uint32_t), PROG_NAME_LENGTH);
-	ft_memcpy((void*)(ply->comment), buffer + 4 + PROG_NAME_LENGTH + 8, COMMENT_LENGTH + 1);
-	if ((size = read(fd, &buffer, CHAMP_MAX_SIZE + 1)) <= 0)
-	{
-		printf("%s is a champion without executable code\n", ply->associated_file);
-		exit(0);
-	}
-	if (size > CHAMP_MAX_SIZE)
-	{
-		printf("executable code size exceed\n");
-		exit(0);
-	}
-	ply->id = id;
-	ply->exec_code_size = size;
-	ft_memcpy(ply->exec_code , buffer, ply->exec_code_size);
-	close(fd);
-	printf("done\n\n");
-}
+// 	if (oo)
+// 		p = oo
+// 	return p
+// }
 
-void	parse_args(int argc, char **argv, t_vm *vm)
-{
-	int			ac;
-	char		*cor;
-	int			nbr_of_players;
+// int main()
+// {
 
-	ac = 1;
-	vm->nbr_of_players = 0;
-	while (ac < argc)
-	{
-		if (!ft_strcmp("-v", argv[ac]))
-		{
-			printf("flag -v\n");
-			// parse_arg_verbose();
-		}
-		else if (!ft_strcmp("-dump", argv[ac]))
-		{
-			printf("flag -dump\n");
-			// parse_arg_dump();// pass ac + 1
-		}
-		else if ((cor = ft_strstr(argv[ac], ".cor")) && cor != argv[ac] && !cor[4])
-		{
-			printf("%s \n", argv[ac]);
-			vm->nbr_of_players++;
-			if (vm->nbr_of_players > MAX_PLAYERS)
-			{
-				ft_putstr("Error: MAX_PLAYERS EXCEEDED\n");
-				exit(0);
-			}
-			t_player	*pl;
-			if (!(pl = (t_player *)malloc(sizeof(t_player))))
-			{
-				// free
-				exit (0);
-			}
-			pl->associated_file = argv[ac];
-			get_player(pl, vm->nbr_of_players);
-			pl->next = NULL;
-			if (!vm->players)
-			{
-				vm->players = pl;
-				vm->tail = pl;
-			}
-			else
-			{
-				vm->tail->next = pl;
-				vm->tail = pl;
-			}
-		}
-		else if (!ft_strcmp("-n", argv[ac]))
-		{
-			printf("flag -n\n");
-			// parse_arg_n(argc, argv, vm, &ac);
-		}
-		else
-		{
-			// free
-			ft_putstr("Error: invalid parameters \n");
-			exit(0);
-		}
-		ac++;
-	}
-}
+// 	t_cor  *ll
+
+// 	malloc
+// 	get_cor(ll)
+// }
+
+// void jj()
+// (
+// 	t_cor *temp = get_cor(0)
+// 	tmp->nex = optopt
+// 	get_cor(0)->arrray[0]=65
+// )
+
 
 int			main(int ac, char **av)
 {
 	t_vm vm;
 
 	ft_bzero(&vm, sizeof(t_vm));
-
-	// vm_init(&vm);
+	vm_init(&vm);
 	parse_args(ac, av, &vm);
-
+	prepare_battleground(&vm);
 	// let_the_game_begin();
 
-	printf("nbr players = %d\n", vm.nbr_of_players);
+	// print the arena
 
-	t_player *pl;
-	pl = vm.players;
-	while (pl)
-	{
-		printf("file = %s\n", pl->associated_file);
-		printf("name = %s\n", pl->prog_name);
-		printf("comment = %s\n", pl->comment);
-		printf("exec = %s\n", pl->exec_code);
-		printf("==================\n");
-		pl = pl->next;
-	}
+printf("hi im done\n");
+
+	// t_gladiator *pl;
+	// pl = vm.gladiators;
+	// while (pl)
+	// {
+	// 	printf("id = %d\n", pl->id);
+	// 	printf("file = %s\n", pl->associated_file);
+	// 	printf("name = %s\n", pl->prog_name);
+	// 	printf("comment = %s\n", pl->comment);
+	// 	printf("exec = %s\n", pl->exec_code);
+	// 	printf("==================\n");
+	// 	pl = pl->next;
+	// }
 
 
 	return (0);
 }
+

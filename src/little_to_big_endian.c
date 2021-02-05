@@ -1,13 +1,23 @@
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   little_to_big_endian.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aybouras <aybouras@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/02 11:43:26 by aybouras          #+#    #+#             */
+/*   Updated: 2021/02/02 11:43:30 by aybouras         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-typedef unsigned int uint32_t;
+# include "../inc/cor.h"
 
-unsigned int little_to_big_endian(unsigned int x);
+uint32_t	little_to_big_endian(uint32_t x);
 uint32_t    swap_uint32(uint32_t d);
 uint32_t    other_method(uint32_t a);
 
 
-unsigned int little_to_big_endian(unsigned int x)
+uint32_t little_to_big_endian(uint32_t x)
 {
 	return (  ((x >> 24) & 0x000000ff)
 			| ((x >> 8) & 0x0000ff00)
