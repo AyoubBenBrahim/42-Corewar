@@ -27,7 +27,6 @@ t_cursor	*init_cursor(t_vm *vm, int id, int mem_zone)
 	ft_bzero(cursor, sizeof(t_cursor));
 	// printf("%p mem_zone : %d size to write : %d\n\n",vm->colosseum, mem_zone ,gldtor->exec_code_size);
 	ft_memcpy(&(vm->colosseum[mem_zone]), gldtor->exec_code, gldtor->exec_code_size);
-
 	cursor->id = id;
 	cursor->carry = FALSE;
 	// cursor->op_code;

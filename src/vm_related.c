@@ -4,10 +4,23 @@
 
 void vm_init(t_vm *vm)
 {
-
+	ft_bzero(vm, sizeof(t_vm));
 	vm->colosseum = (uint8_t *)malloc(sizeof(uint8_t) * (MEM_SIZE + 1));
+	if (vm->colosseum == NULL)
+	{
+		printf("failed to build the colosseum\n");
+		// return (0);
+		exit(0);
+	}
 	ft_bzero(vm->colosseum, sizeof(vm->colosseum));
 
+	// vm->gladiators = NULL;
+	// vm->nbr_of_gldtors = 0;
+	// vm->the_conqueror = NULL;
+	// vm->cursors = NULL;
+	// vm->cycles = 0;
+	// vm->cycles_to_die = CYCLE_TO_DIE;
+	// vm->cycles_after_check = 0;
 
 
 

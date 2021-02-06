@@ -14,45 +14,17 @@
 # include "../inc/cor.h"
 
 
-// t_cor  *get_cor(t_cor *oo)
-// {
-// 	static t_cor *p
-
-// 	if (oo)
-// 		p = oo
-// 	return p
-// }
-
-// int main()
-// {
-
-// 	t_cor  *ll
-
-// 	malloc
-// 	get_cor(ll)
-// }
-
-// void jj()
-// (
-// 	t_cor *temp = get_cor(0)
-// 	tmp->nex = optopt
-// 	get_cor(0)->arrray[0]=65
-// )
-
 
 int			main(int ac, char **av)
 {
 	t_vm vm;
 
-	ft_bzero(&vm, sizeof(t_vm));
 	vm_init(&vm);
 	parse_args(ac, av, &vm);
 	prepare_battleground(&vm);
+	// print_colosseum(&vm);
+
 	// let_the_game_begin();
-
-	// print the arena
-
-printf("hi im done\n");
 
 	// t_gladiator *pl;
 	// pl = vm.gladiators;

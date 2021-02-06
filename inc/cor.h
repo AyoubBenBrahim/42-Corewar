@@ -60,7 +60,7 @@ typedef struct		s_vm
 	t_gladiator		*gladiators;
 	t_gladiator		*tail;
 	int				nbr_of_gldtors;
-	t_gladiator		*last_survivor;
+	t_gladiator		*the_conqueror;//   last_survivor;
 	t_cursor		*cursors; // list of process
 	int				cursors_counter;
 	int				lives_num;
