@@ -31,7 +31,7 @@ void		get_player(t_gladiator *gldtor, int id)
 
 	if ((fd = open(gldtor->associated_file, O_RDONLY)) < 0)
 	{
-		printf("%s is an Invalid file.\n", gldtor->associated_file); // u may use perorr()
+		printf("%s is an Invalid file.\n", gldtor->associated_file); // we may use perorr()
 		exit(0);
 	}
 	if (read(fd, &buffer, HEADER_SIZE) < HEADER_SIZE)
@@ -44,7 +44,7 @@ void		get_player(t_gladiator *gldtor, int id)
 		printf("%s has an invalid magic Header.\n", gldtor->associated_file);
 		exit(0);
 	}
-	ft_memcpy((void*)(gldtor->prog_name), buffer + sizeof(uint32_t), PROG_NAME_LENGTH);
+	ft_memcpy((void*)(gldtor->prog_name), buffer + 4 , PROG_NAME_LENGTH);
 	ft_memcpy((void*)(gldtor->comment), buffer + 4 + PROG_NAME_LENGTH + 8, COMMENT_LENGTH + 1);
 	if ((size = read(fd, &buffer, CHAMP_MAX_SIZE + 1)) <= 0)
 	{
