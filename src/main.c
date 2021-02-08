@@ -1,3 +1,5 @@
+
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -14,6 +16,47 @@
 # include "../inc/cor.h"
 
 
+// t_cor  *get_cor(t_cor *oo)
+// {
+// 	static t_cor *p
+
+// 	if (oo)
+// 		p = oo
+// 	return p
+// }
+
+// int main()
+// {
+
+// 	t_cor  *ll
+
+// 	malloc
+// 	get_cor(ll)
+// }
+
+// void jj()
+// (
+// 	t_cor *temp = get_cor(0)
+// 	tmp->nex = optopt
+// 	get_cor(0)->arrray[0]=65
+// )
+
+
+// to use ft_printf here
+void	print_colosseum(t_vm *v)
+{
+	int i;
+
+	i = 0;
+	while (i < MEM_SIZE)
+	{
+		if (i % 64 == 0 && i != 0)
+			printf("\n");
+		printf("%02x ", v->colosseum[i]);
+		i++;
+	}
+	printf("\n");
+}
 
 int			main(int ac, char **av)
 {
@@ -22,8 +65,8 @@ int			main(int ac, char **av)
 	vm_init(&vm);
 	parse_args(ac, av, &vm);
 	prepare_battleground(&vm);
-	// print_colosseum(&vm);
-
+	print_colosseum(&vm);
+	// printf("\n");
 	// let_the_game_begin();
 
 	// t_gladiator *pl;
