@@ -42,7 +42,7 @@
 // )
 
 
-// to use ft_printf here
+// to use ft_printf here we can use a modified version of print_memory
 void	print_colosseum(t_vm *v)
 {
 	int i;
