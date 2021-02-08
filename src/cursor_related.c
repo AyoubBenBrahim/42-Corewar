@@ -12,11 +12,11 @@
 
 # include "../inc/cor.h"
 
-void	load_cursor(t_cursor **curs_list, t_cursor *new)
+void	load_cursor(t_cursor **curs_list, t_cursor *new_curs)
 {
-	if (new)
-		new->next = *curs_list;
-	*curs_list = new;
+	if (new_curs)
+		new_curs->next = *curs_list;
+	*curs_list = new_curs;
 }
 
 t_cursor	*init_cursor(t_vm *vm, int id, int mem_zone)
