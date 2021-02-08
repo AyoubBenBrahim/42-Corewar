@@ -29,7 +29,7 @@ typedef enum			e_boolean
 	TRUE,
 }						t_boolean;
 
-typedef struct		s_gladiator
+typedef struct			s_gladiator
 {
 	int					id;
 	char				*associated_file;
@@ -40,44 +40,44 @@ typedef struct		s_gladiator
 	struct s_gladiator	*next;
 }						t_gladiator;
 
-typedef struct	 s_cursor
+typedef struct	 		s_cursor
 {
-	int				id;
-	uint32_t		current_addr;
-	t_boolean		carry;
-	int				op_code; // operation code
-	int				last_live;
-	int				wait_cycles;
-	int				jump;
-	int				reg[REG_NUMBER];	// register
+	int					id;
+	uint32_t			current_addr;
+	t_boolean			carry;
+	int					op_code; // operation code
+	int					last_live;
+	int					wait_cycles;
+	int					jump;
+	int					reg[REG_NUMBER];	// register
 	// t_gladiator		*gladiator; // not needed
-	struct s_cursor	*next;
-}		t_cursor;
+	struct s_cursor		*next;
+}						t_cursor;
 
-typedef struct		s_vm
+typedef struct			s_vm
 {
-	uint8_t			*colosseum;
-	t_gladiator		*gladiators;
-	t_gladiator		*tail;
-	int				nbr_of_gldtors;
-	t_gladiator		*the_conqueror;//   last_survivor;
-	t_cursor		*cursors; // list of process
-	int				cursors_counter;
-	int				lives_num;
-	int				cycles;
-	int				cycles_to_die;
-	int				cycles_after_check;
+	uint8_t				*colosseum;
+	t_gladiator			*gladiators;
+	t_gladiator			*tail;
+	int					nbr_of_gldtors;
+	t_gladiator			*the_conqueror;//   last_survivor;
+	t_cursor			*cursors; // list of process/cursors
+	int					cursors_counter;
+	int					lives_num;
+	int					cycles;
+	int					cycles_to_die;
+	int					cycles_after_check;
 
-}					t_vm;
+}						t_vm;
 
-uint32_t		little_to_big_endian(unsigned int x);
-void			vm_init(t_vm *vm);
-void			parse_args(int argc, char **argv, t_vm *vm);
-void			get_player(t_gladiator *gldtor, int id);
-t_gladiator		*get_gldtor_by_id(t_gladiator *gldtor_lst, int id);
-t_cursor		*init_cursor(t_vm *vm, int id, int mem_zone);
-void			load_cursor(t_cursor **curs_list, t_cursor *new);
-void			prepare_battleground(t_vm	*vm);
+uint32_t				little_to_big_endian(unsigned int x);
+void					vm_init(t_vm *vm);
+void					parse_args(int argc, char **argv, t_vm *vm);
+void					get_player(t_gladiator *gldtor, int id);
+t_gladiator				*get_gldtor_by_id(t_gladiator *gldtor_lst, int id);
+t_cursor				*init_cursor(t_vm *vm, int id, int mem_zone);
+void					load_cursor(t_cursor **curs_list, t_cursor *new);
+void					prepare_battleground(t_vm	*vm);
 
 
 
