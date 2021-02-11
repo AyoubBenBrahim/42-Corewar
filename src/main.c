@@ -39,7 +39,7 @@
 // )
 
 
-// to use ft_printf here, we can also use a modified version of print_memory
+//  ft_printf insted , we can also use a modified version of print_memory
 void	print_colosseum(t_vm *v)
 {
 	int i;
@@ -58,6 +58,8 @@ void	print_colosseum(t_vm *v)
 int			main(int ac, char **av)
 {
 	t_vm vm;
+
+	printf(">>>> %s\n", op_tab[0].op_name);
 
 	vm_init(&vm);
 	parse_args(ac, av, &vm);

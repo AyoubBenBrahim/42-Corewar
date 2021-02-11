@@ -54,6 +54,20 @@ typedef struct	 		s_cursor
 	struct s_cursor		*next;
 }						t_cursor;
 
+typedef struct s_op
+{
+    char *op_name;
+    int arg_len;
+    int arg[3];
+    int op_code;
+    int cycles_to_wait;
+    char *description;
+    int codage_octect;
+    int size_t_dir;
+}               t_op;
+
+extern t_op    op_tab[17];
+
 typedef struct			s_vm
 {
 	uint8_t				*colosseum;

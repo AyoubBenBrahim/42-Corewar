@@ -42,7 +42,7 @@ t_cursor	*init_cursor(t_vm *vm, int id, int mem_zone)
 	cursor->carry = FALSE;
 	// cursor->op_code;
 	cursor->last_live = 0;
-	cursor->wait_cycles = 0;
+	cursor->wait_cycles = -1;
 	cursor->jump = 0;
 	cursor->reg[0] = id * (-1); //
 	return (cursor);
