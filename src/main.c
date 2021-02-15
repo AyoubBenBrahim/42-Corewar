@@ -6,7 +6,7 @@
 /*   By: aybouras <aybouras@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 11:35:05 by aybouras          #+#    #+#             */
-/*   Updated: 2021/02/08 12:55:17 by aybouras         ###   ########.fr       */
+/*   Updated: 2021/02/15 11:24:07 by aybouras         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,14 @@ int			main(int ac, char **av)
 {
 	t_vm vm;
 
-	printf(">>>> %s\n", op_tab[0].op_name);
+	// printf(">>>> %s\n", op_tab[3].op_name);
 
 	vm_init(&vm);
 	parse_args(ac, av, &vm);
 	prepare_battleground(&vm);
-	print_colosseum(&vm);
+	// print_colosseum(&vm);
 	// printf("\n");
-	// let_the_game_begin();
+	let_the_game_begin(&vm);
 
 	// t_gladiator *pl;
 	// pl = vm.gladiators;

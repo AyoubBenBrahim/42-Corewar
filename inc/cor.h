@@ -21,6 +21,7 @@
 # include <stdio.h> // ************* delete
 # include <unistd.h>
 
+
 #define HEADER_SIZE (16 + PROG_NAME_LENGTH + COMMENT_LENGTH)
 
 typedef enum			e_boolean
@@ -92,6 +93,7 @@ t_gladiator				*get_gldtor_by_id(t_gladiator *gldtor_lst, int id);
 t_cursor				*init_cursor(t_vm *vm, int id, int mem_zone);
 void					load_cursor(t_cursor **curs_list, t_cursor *new);
 void					prepare_battleground(t_vm	*vm);
+void					let_the_game_begin(t_vm *vm);
 
 
 

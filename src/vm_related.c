@@ -6,7 +6,7 @@
 /*   By: aybouras <aybouras@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 12:55:52 by aybouras          #+#    #+#             */
-/*   Updated: 2021/02/08 12:55:56 by aybouras         ###   ########.fr       */
+/*   Updated: 2021/02/15 11:24:27 by aybouras         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void vm_init(t_vm *vm)
 	// vm->nbr_of_gldtors = 0;
 	// vm->the_conqueror = NULL;
 	// vm->cursors = NULL;
-	// vm->cycles = 0;
-	// vm->cycles_to_die = CYCLE_TO_DIE;
+	vm->cycles = 0;
+	vm->cycles_to_die = CYCLE_TO_DIE;
 	// vm->cycles_after_check = 0;
 
 

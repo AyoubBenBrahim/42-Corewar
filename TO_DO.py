@@ -27,7 +27,7 @@ def exec(vm):
 			if instruct > 0 and instruct < 17:
 			{
 				if prcess.wait =! -1
-					prcess.wait = op_tab[instruct -1 ][cycle_wait] ###val wait
+					prcess.wait = op_tab[instruct - 1][cycle_wait] ###val wait
 				if  !prcess.wait:
 					exec_instruct() ###  add how mache jump    curs++=???
 				else:
@@ -43,7 +43,7 @@ def exec(vm):
 			vm.cycle_last_check = vm.cycle # always store the last value of process cycle when the last check performed
 			vm.count_max_chek++
 			check_who_is_alive() ### if process->live == 0: kill else  process->live = 0
-			if vm.nbr_live_one_die >= 21 or vm.count_max_chek = 10:
+			if vm.nbr_live_one_die >= 21 or vm.count_max_chek = 10
 			{
 				vm.count_max_chek = 0
 				vm.nbr_live_one_die = 0
