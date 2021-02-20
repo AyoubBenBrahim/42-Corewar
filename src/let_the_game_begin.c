@@ -70,7 +70,7 @@ void let_the_game_begin(t_vm *vm)
 			printf("100 cycles \n");
 			exit(0);
 		}
-
+		performe_check(vm);
 
 	}
 }
