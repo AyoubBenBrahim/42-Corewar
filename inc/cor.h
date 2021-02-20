@@ -57,15 +57,15 @@ typedef struct	 		s_cursor
 
 typedef struct s_op
 {
-    char *op_name;
-    int arg_len;
-    int arg[3];
-    int op_code;
-    int cycles_to_wait;
-    char *description;
-    int codage_octect;
-    int size_t_dir;
-}               t_op;
+	char				*op_name;
+	int					arg_len;
+	int					arg[3];
+	int					op_code;
+	int					cycles_to_wait;
+	char				*description;
+	int					codage_octect;
+	int					size_t_dir;
+}						t_op;
 
 extern t_op    op_tab[17];
 
@@ -75,7 +75,7 @@ typedef struct			s_vm
 	t_gladiator			*gladiators;
 	t_gladiator			*tail;
 	int					nbr_of_gldtors;
-	t_gladiator			*the_conqueror;//   last_survivor;
+	t_gladiator			*the_conqueror;//   last_survivor
 	t_cursor			*cursors; // list of process/cursors
 	int					cursors_counter;
 	int					lives_num;

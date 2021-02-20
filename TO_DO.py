@@ -28,8 +28,8 @@ def exec(vm):
 			{
 				if prcess.wait =! -1
 					prcess.wait = op_tab[instruct - 1][cycle_wait] ###val wait
-				if  !prcess.wait:
-					exec_instruct() ###  add how mache jump    curs++=???
+				if ( !prcess.wait)
+					exec_instruct() ###  add how much jump    curs++=???
 				else:
 					prcess.wait--
 			}
@@ -37,9 +37,9 @@ def exec(vm):
 				prcess.cursors++
 
 		}
-		## check if a process declared live cycle_die=>   init=1536
-		if (vm.cycle == vm.cycle_last_check +  vm.cycle_die  OR cycles_to_die <= 0) #all carriages are considered dead.:
-		{	###check
+		## check if a process declared live cycle_die =>   init=1536
+		if (vm.cycle == vm.cycle_last_check + vm.cycle_die OR cycles_to_die <= 0) #all carriages are considered dead :
+		{
 			vm.cycle_last_check = vm.cycle # always store the last value of process cycle when the last check performed
 			vm.count_max_chek++
 			check_who_is_alive() ### if process->live == 0: kill else  process->live = 0

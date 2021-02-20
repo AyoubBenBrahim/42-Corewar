@@ -36,7 +36,6 @@ t_cursor	*init_cursor(t_vm *vm, int id, int mem_zone)
 		exit(0);
 	}
 	ft_bzero(cursor, sizeof(t_cursor));
-	// printf("%p mem_zone : %d size to write : %d\n\n",vm->colosseum, mem_zone ,gldtor->exec_code_size);
 	ft_memcpy(&(vm->colosseum[mem_zone]), gldtor->exec_code, gldtor->exec_code_size);
 	cursor->id = id;
 	cursor->carry = FALSE;
@@ -44,7 +43,7 @@ t_cursor	*init_cursor(t_vm *vm, int id, int mem_zone)
 	cursor->last_live = 0;
 	cursor->wait_cycles = -1;
 	cursor->jump = 0;
-	cursor->reg[0] = id * (-1); //
+	cursor->reg[0] = id * (-1); // re-check this after
 	return (cursor);
 }
 

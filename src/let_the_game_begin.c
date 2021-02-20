@@ -12,33 +12,44 @@
 
 #include "../inc/cor.h"
 
-void	loop_through_cursors()
+void	exec_operation()
 {
 
 }
 
-void	let_the_game_begin(t_vm *vm)
+void loop_through_cursors(t_vm *vm)
 {
-	t_cursor *cursors;
-	int		op;
+	t_cursor	*cursor;
+	int			opcode;
 
+	cursor = vm->cursors;
+	while (cursor)
+	{
+		opcode = vm->colosseum[cursor->op_code];
+		if (opcode && opcode <= REG_NUMBER)
+		{
+			if (cursor->wait_cycles != -1)
+				cursor->wait_cycles = op_tab[opcode].cycles_to_wait;
+			if (!cursor->wait_cycles)
+				exec_operation();
+			else
+				cursor->wait_cycles--;
+		}
+		else
+			cursor->wait_cycles++;
+
+
+		cursor = cursor->next;
+	}
+}
+
+void let_the_game_begin(t_vm *vm)
+{
 	while (++vm->cycles)
 	{
+		loop_through_cursors(vm);
 
-		cursors = vm->cursors;
-		while (cursors)
-		{
-
-			op = vm->colosseum[cursors->op_code];
-
-			// if (proc->opcode && proc->opcode <= REG_NUMBER)
-			// if instruct > 0 and instruct < 17
-
-
-			cursors = cursors->next;
-		}
-
-		if (vm->cycles == 10)
+		if (vm->cycles == 100)
 		{
 			printf("100 cycles \n");
 			exit(0);

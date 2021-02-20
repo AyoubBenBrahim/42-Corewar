@@ -4,4 +4,6 @@ Core War was inspired by a malicious virus written in the 80’s. To deal with t
 
 This inspired the Canadian mathematician A. K. Dewdney to co-invent the programming game Core War..
 
-The idea was simple. You compete by designing viruses to overtake a computer. You win by protecting your own program and overwriting your opponent's programs. This is all happening on a virtual computer. 
+You compete by designing viruses to overtake a computer.
+
+You win by protecting your own program and overwriting your opponent's programs. This is all happening on a virtual computer.
