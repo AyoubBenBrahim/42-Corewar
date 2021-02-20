@@ -43,6 +43,22 @@ void loop_through_cursors(t_vm *vm)
 	}
 }
 
+void	performe_check(t_vm *vm)
+{
+	if (vm.cycle == vm.cycle_last_check + vm.cycle_die OR cycles_to_die <= 0) //all carriages are considered dead :
+	{
+		vm.cycle_last_check = vm.cycle // always store the last value of process cycle when the last check performed
+		vm.count_max_chek++
+		check_who_is_alive() // if process->live == 0: kill else  process->live = 0
+		if vm.nbr_live_one_die >= 21 or vm.count_max_chek = 10
+		{
+			vm.count_max_chek = 0
+			vm.nbr_live_one_die = 0
+			vm.cycle_to_die -= 50 //CYCLE_DELTA
+		}
+	}
+}
+
 void let_the_game_begin(t_vm *vm)
 {
 	while (++vm->cycles)
@@ -54,5 +70,7 @@ void let_the_game_begin(t_vm *vm)
 			printf("100 cycles \n");
 			exit(0);
 		}
+
+
 	}
 }
