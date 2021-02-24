@@ -69,12 +69,12 @@ void let_the_game_begin(t_vm *vm)
 	while (++vm->cycles)
 	{
 		loop_through_cursors(vm);
+		performe_check(vm);
 
 		if (vm->cycles == 100)
 		{
 			printf("100 cycles \n");
 			exit(0);
 		}
-		performe_check(vm);
 	}
 }
