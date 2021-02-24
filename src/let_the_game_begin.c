@@ -26,13 +26,13 @@ void loop_through_cursors(t_vm *vm)
 {
 	t_cursor	*cursor;
 	int			adr;
-	int op_code;
+	int			op_code;
 
 	cursor = vm->cursors;
 	while (cursor)
 	{
 		// convert from hexa to int
-		adr = vm->colosseum[cursor->current_addr];
+		adr = cursor->current_addr;//vm->colosseum[cursor->current_addr];
 		if (adr && adr <= REG_NUMBER)
 		{
 			if (cursor->wait_cycles == -1)
@@ -76,6 +76,5 @@ void let_the_game_begin(t_vm *vm)
 			exit(0);
 		}
 		performe_check(vm);
-
 	}
 }

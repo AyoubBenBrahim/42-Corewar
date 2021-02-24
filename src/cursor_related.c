@@ -40,7 +40,7 @@ t_cursor	*init_cursor(t_vm *vm, int id, int mem_zone)
 
 	cursor->id = id;
 	cursor->carry = FALSE;
-	cursor->current_addr = vm->colosseum[mem_zone];
+	cursor->current_addr = mem_zone;
 	cursor->last_live = 0;
 	cursor->wait_cycles = -1;
 	cursor->jump = 0;
