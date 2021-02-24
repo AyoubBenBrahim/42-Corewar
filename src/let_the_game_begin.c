@@ -25,25 +25,25 @@ void	check_who_is_alive()
 void loop_through_cursors(t_vm *vm)
 {
 	t_cursor	*cursor;
-	int			opcode;
+	int			adr;
+	int op_code;
 
 	cursor = vm->cursors;
 	while (cursor)
 	{
-		opcode = vm->colosseum[cursor->op_code];
-		if (opcode && opcode <= REG_NUMBER)
+		// convert from hexa to int
+		adr = vm->colosseum[cursor->current_addr];
+		if (adr && adr <= REG_NUMBER)
 		{
-			if (cursor->wait_cycles != -1)
-				cursor->wait_cycles = op_tab[opcode].cycles_to_wait;
+			if (cursor->wait_cycles == -1)
+				cursor->wait_cycles = op_tab[op_code].cycles_to_wait;
 			if (!cursor->wait_cycles)
 				exec_operation();
 			else
 				cursor->wait_cycles--;
 		}
 		else
-			cursor->wait_cycles++;
-
-
+			cursor->current_addr++;
 		cursor = cursor->next;
 	}
 }

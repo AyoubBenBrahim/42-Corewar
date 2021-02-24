@@ -37,9 +37,10 @@ t_cursor	*init_cursor(t_vm *vm, int id, int mem_zone)
 	}
 	ft_bzero(cursor, sizeof(t_cursor));
 	ft_memcpy(&(vm->colosseum[mem_zone]), gldtor->exec_code, gldtor->exec_code_size);
+
 	cursor->id = id;
 	cursor->carry = FALSE;
-	// cursor->op_code;
+	cursor->current_addr = vm->colosseum[mem_zone];
 	cursor->last_live = 0;
 	cursor->wait_cycles = -1;
 	cursor->jump = 0;
