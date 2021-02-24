@@ -17,6 +17,11 @@ void	exec_operation()
 
 }
 
+void	check_who_is_alive()
+{
+
+}
+
 void loop_through_cursors(t_vm *vm)
 {
 	t_cursor	*cursor;
@@ -45,16 +50,16 @@ void loop_through_cursors(t_vm *vm)
 
 void	performe_check(t_vm *vm)
 {
-	if (vm.cycle == vm.cycle_last_check + vm.cycle_die OR cycles_to_die <= 0) //all carriages are considered dead :
+	if ((vm->cycles == vm->cycles_last_check + vm->cycles_to_die) || vm->cycles_to_die <= 0)
 	{
-		vm.cycle_last_check = vm.cycle // always store the last value of process cycle when the last check performed
-		vm.count_max_chek++
-		check_who_is_alive() // if process->live == 0: kill else  process->live = 0
-		if vm.nbr_live_one_die >= 21 or vm.count_max_chek = 10
+		vm->cycles_last_check = vm->cycles;
+		vm->count_live_checks++;
+		check_who_is_alive();
+		if (vm->lives_counter >= NBR_LIVE || vm->count_live_checks == MAX_CHECKS)
 		{
-			vm.count_max_chek = 0
-			vm.nbr_live_one_die = 0
-			vm.cycle_to_die -= 50 //CYCLE_DELTA
+			vm->count_live_checks = 0;
+			vm->lives_counter = 0;
+			vm->cycles_to_die -= CYCLE_DELTA;
 		}
 	}
 }

@@ -81,7 +81,9 @@ typedef struct			s_vm
 	int					lives_num;
 	int					cycles;
 	int					cycles_to_die;
-	int					cycles_after_check;
+	int					cycles_last_check;
+	int					count_live_checks;
+	int					lives_counter;
 
 }						t_vm;
 
