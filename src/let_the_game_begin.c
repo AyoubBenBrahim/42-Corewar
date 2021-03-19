@@ -74,8 +74,8 @@ void loop_through_cursors(t_vm *vm)
 			if (!cursor->wait_cycles)
 			{
 				cursor->wait_cycles = op_tab[adr - 1].cycles_to_wait;// opcode starts from 0
-				printf("%d %d", cursor->id, cursor->op_code);
-				// exec_operation();
+				// printf("%d %d", cursor->id, cursor->op_code);
+				exec_operation();
 			}
 			else
 				cursor->wait_cycles--;
@@ -103,16 +103,16 @@ void	performe_check(t_vm *vm)
 
 void let_the_game_begin(t_vm *vm)
 {
-	// while (++vm->cycles)
-	// {
-	// 	loop_through_cursors(vm);
-	// 	performe_check(vm);
+	while (++vm->cycles)
+	{
+		loop_through_cursors(vm);
+		performe_check(vm);
 
-		// if (vm->cycles == 100)
-		// {
-		// 	printf("100 cycles \n");
-		// 	exit(0);
-		// }
-	// }
-	
+		if (vm->cycles == 100) // just to stop the loop
+		{
+			printf("\n100 cycles \n");
+			exit(0);
+		}
+	}
+
 }

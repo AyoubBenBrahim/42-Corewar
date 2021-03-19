@@ -13,7 +13,7 @@
 NAME = libft.a
 
 SRC_DIR = ./src/
-INC_DIR = ./includes/
+INC_DIR = ./inc/
 OBJ_DIR = ./obj
 
 HEADERS = $(INC_DIR)libft.h
@@ -23,7 +23,7 @@ SRC_FILES = free_2d.c ft_atoi.c ft_atoll.c ft_bzero.c ft_del.c ft_ifcount.c ft_i
 OBJ_SRC = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:%.c=%.o))
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra 
+CFLAGS = -Wall -Werror -Wextra
 INC = -I $(INC_DIR)
 
 C_RED = \033[31m

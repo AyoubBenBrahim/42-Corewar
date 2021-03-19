@@ -16,7 +16,7 @@
 
 # include <stdlib.h>
 # include "op.h"
-# include "../libft/includes/libft.h"
+# include "../libft/inc/libft.h"
 # include <fcntl.h>
 # include <stdio.h> // ************* delete
 # include <unistd.h>

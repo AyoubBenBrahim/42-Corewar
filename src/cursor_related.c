@@ -28,12 +28,12 @@ t_cursor	*init_cursor(t_vm *vm, int id, int mem_zone)
 	{
 		ft_putstr("gladiator doesn't exist\n");
 		//free
-		exit(0);
+		exit(1);
 	}
 	if (!(cursor = (t_cursor *)malloc(sizeof(t_cursor))))
 	{
 		// free
-		exit(0);
+		exit(1);
 	}
 	ft_bzero(cursor, sizeof(t_cursor));
 	ft_memcpy(&(vm->colosseum[mem_zone]), gldtor->exec_code, gldtor->exec_code_size);

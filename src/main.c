@@ -66,19 +66,6 @@ int			main(int ac, char **av)
 	// printf("\n");
 	let_the_game_begin(&vm);
 
-	// t_gladiator *pl;
-	// pl = vm.gladiators;
-	// while (pl)
-	// {
-	// 	printf("id = %d\n", pl->id);
-	// 	printf("file = %s\n", pl->associated_file);
-	// 	printf("name = %s\n", pl->prog_name);
-	// 	printf("comment = %s\n", pl->comment);
-	// 	printf("exec = %s\n", pl->exec_code);
-	// 	printf("==================\n");
-	// 	pl = pl->next;
-	// }
-
 
 	return (0);
 }
