@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../inc/cor.h"
+# include "../includes/cor.h"
 
 
 // t_cor  *get_cor(t_cor *oo)
@@ -58,8 +58,6 @@ void	print_colosseum(t_vm *v)
 int			main(int ac, char **av)
 {
 	t_vm vm;
-
-	// printf(">>>> %s\n", op_tab[3].op_name);
 
 	vm_init(&vm);
 	parse_args(ac, av, &vm);

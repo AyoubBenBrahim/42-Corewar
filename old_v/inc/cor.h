@@ -78,7 +78,7 @@ typedef struct			s_vm
 	int					nbr_of_gldtors;
 	t_gladiator			*the_conqueror;//   last_survivor
 	t_cursor			*cursors; // list of process/cursors
-	int					cursors_counter;
+	int					cursors_counter;12
 	int					lives_num;
 	int					cycles;
 	int					cycles_to_die;

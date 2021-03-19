@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../inc/cor.h"
+# include "../includes/cor.h"
 
 void	load_cursor(t_cursor **curs_list, t_cursor *new_curs)
 {
@@ -42,11 +42,10 @@ t_cursor	*init_cursor(t_vm *vm, int id, int mem_zone)
 	cursor->carry = FALSE;
 	cursor->current_addr = mem_zone;
 	cursor->last_live = 0;
-	cursor->wait_cycles = -1;
+	cursor->wait_cycles = 0;
 	cursor->jump = 0;
 	cursor->reg[0] = id * (-1); // re-check this after
 	cursor->is_alive = FALSE;
-
 	return (cursor);
 }
 

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cor.h"
+#include "../includes/cor.h"
 
 void	exec_operation()
 {
@@ -48,7 +48,7 @@ void	check_who_is_alive(t_vm *vm)
 	while (this)
 	{
 		if (!this->is_alive)
-			kill_cursor(&vm, &this, &prev);
+			kill_cursor(vm, &this, &prev);
 		else
 		{
 			this->is_alive = FALSE;
@@ -62,6 +62,7 @@ void loop_through_cursors(t_vm *vm)
 {
 	t_cursor	*cursor;
 	int			adr;
+	int			op_code;
 
 	cursor = vm->cursors;
 	while (cursor)
@@ -70,10 +71,12 @@ void loop_through_cursors(t_vm *vm)
 		adr = vm->colosseum[cursor->current_addr];
 		if (adr && adr <= REG_NUMBER)
 		{
-			if (cursor->wait_cycles == -1)
-				cursor->wait_cycles = op_tab[adr - 1].cycles_to_wait;// opcode starts from 0
 			if (!cursor->wait_cycles)
-				exec_operation();
+			{
+				cursor->wait_cycles = op_tab[adr - 1].cycles_to_wait;// opcode starts from 0
+				printf("%d %d", cursor->id, cursor->op_code);
+				// exec_operation();
+			}
 			else
 				cursor->wait_cycles--;
 		}
@@ -89,7 +92,6 @@ void	performe_check(t_vm *vm)
 	{
 		vm->cycles_last_check = vm->cycles;
 		vm->count_live_checks++;
-		check_who_is_alive();
 		if (vm->lives_counter >= NBR_LIVE || vm->count_live_checks == MAX_CHECKS)
 		{
 			vm->count_live_checks = 0;
@@ -101,27 +103,16 @@ void	performe_check(t_vm *vm)
 
 void let_the_game_begin(t_vm *vm)
 {
-	while (++vm->cycles)
-	{
-		loop_through_cursors(vm);
-		performe_check(vm);
+	// while (++vm->cycles)
+	// {
+	// 	loop_through_cursors(vm);
+	// 	performe_check(vm);
 
-		if (vm->cycles == 100)
-		{
-			printf("100 cycles \n");
-			exit(0);
-		}
-	}
+		// if (vm->cycles == 100)
+		// {
+		// 	printf("100 cycles \n");
+		// 	exit(0);
+		// }
+	// }
+	
 }
-
-// If -dump flag is present The memory must be dumped in the hexadecimal
-// format with 32 octets per line.
-
-// if ((int)vm->current_cycle == vm->dump_cycle)
-// 			dump_memory(vm);
-
-// ***********//
-// if (g_total_cycle == g_dump_core)
-// 		hexdumper(g_memory);
-
-
