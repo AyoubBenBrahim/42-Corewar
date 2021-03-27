@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_number.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahel-men <ahel-men@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aybouras <aybouras@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/16 15:32:53 by aybouras          #+#    #+#             */
-/*   Updated: 2020/10/24 13:38:10 by ahel-men         ###   ########.fr       */
+/*   Created: 2021/03/25 12:19:54 by aybouras          #+#    #+#             */
+/*   Updated: 2021/03/25 12:20:04 by aybouras         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int		is_number(char *str)
 	int i;
 
 	i = 0;
-	if (str[0] == '-')
-		return (0);
 	if (str == NULL)
+		return (0);
+	if (str[0] == '-')
 		return (0);
 	while (str[i])
 	{

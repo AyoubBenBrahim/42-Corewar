@@ -6,36 +6,29 @@
 /*   By: aybouras <aybouras@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 11:23:32 by aybouras          #+#    #+#             */
-/*   Updated: 2021/02/15 11:24:00 by aybouras         ###   ########.fr       */
+/*   Updated: 2021/03/25 09:47:24 by aybouras         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cor.h"
+#include "../inc/cor.h"
 
-void	exec_operation()
+void	exec_operation(t_vm *vm, t_cursor *prc)
 {
-
-}
-
-void kill_cursor(t_vm *vm, t_cursor **this, t_cursor **prev)
-{
-	t_cursor *temp;
-
-	if (vm->cursors == *this)
+	if (!parse_operation(vm, prc))
 	{
-		vm->cursors = (*this)->next;
-		temp = vm->cursors;
+		prc->cur_addr = addr_overlap(prc->cur_addr + get_op_size(prc));
+		return ;
 	}
-	else if (*prev)
-	{
-		(*prev)->next = (*this)->next;
-		temp = (*prev)->next;
-
-	}
-	free(*this);
-	*this = NULL;
-	*this = temp;
-	vm->cursors_counter--;
+	if (op_tab[prc->cmp.code].op_type == 1)
+		logical_op(prc, &prc->cmp);
+	else if (op_tab[prc->cmp.code].op_type == 2)
+		fork_op(prc, &prc->cmp, vm);
+	else if (op_tab[prc->cmp.code].op_type == 3)
+		mem_op(prc, &prc->cmp, vm);
+	else
+		live(vm, prc);
+	op_tab[prc->cmp.code].carry ? set_carry(prc, &prc->cmp) : 0;
+	prc->cur_addr = addr_overlap(prc->cur_addr + prc->cmp.step);
 }
 
 void	check_who_is_alive(t_vm *vm)
@@ -48,7 +41,7 @@ void	check_who_is_alive(t_vm *vm)
 	while (this)
 	{
 		if (!this->is_alive)
-			kill_cursor(vm, &this, &prev);
+			this = kill_cursor(vm, this, prev);
 		else
 		{
 			this->is_alive = FALSE;
@@ -58,61 +51,64 @@ void	check_who_is_alive(t_vm *vm)
 	}
 }
 
-void loop_through_cursors(t_vm *vm)
+void	loop_through_cursors(t_vm *vm)
 {
 	t_cursor	*cursor;
-	int			adr;
-	int			op_code;
 
 	cursor = vm->cursors;
 	while (cursor)
 	{
-		// convert from hexa to int
-		adr = vm->colosseum[cursor->current_addr];
-		if (adr && adr <= REG_NUMBER)
+		cursor->cur_addr = addr_overlap(cursor->cur_addr);
+		if (cursor->wait_cycles == 0)
+			set_op_code(cursor, vm);
+		if (cursor->wait_cycles > 0)
+			cursor->wait_cycles--;
+		if (cursor->wait_cycles == 0)
 		{
-			if (!cursor->wait_cycles)
-			{
-				cursor->wait_cycles = op_tab[adr - 1].cycles_to_wait;// opcode starts from 0
-				// printf("%d %d", cursor->id, cursor->op_code);
-				exec_operation();
-			}
+			if (between(cursor->cmp.code, 1, 16))
+				exec_operation(vm, cursor);
 			else
-				cursor->wait_cycles--;
+				cursor->cur_addr = addr_overlap(cursor->cur_addr + 1);
 		}
-		else
-			cursor->current_addr++;
 		cursor = cursor->next;
 	}
+	vm->cycles++;
+	vm->total_cycles++;
 }
 
 void	performe_check(t_vm *vm)
 {
-	if ((vm->cycles == vm->cycles_last_check + vm->cycles_to_die) || vm->cycles_to_die <= 0)
+	if (vm->cycles == vm->cycles_to_die)
 	{
-		vm->cycles_last_check = vm->cycles;
 		vm->count_live_checks++;
-		if (vm->lives_counter >= NBR_LIVE || vm->count_live_checks == MAX_CHECKS)
+		check_who_is_alive(vm);
+		if (vm->lives_counter >= NBR_LIVE
+							|| vm->count_live_checks == MAX_CHECKS)
 		{
 			vm->count_live_checks = 0;
-			vm->lives_counter = 0;
 			vm->cycles_to_die -= CYCLE_DELTA;
 		}
+		vm->lives_counter = 0;
+		vm->cycles = 0;
 	}
 }
 
-void let_the_game_begin(t_vm *vm)
+void	let_the_game_begin(t_vm *vm)
 {
-	while (++vm->cycles)
+	while (vm->cycles_to_die > 0 && vm->cursors_counter > 0)
 	{
-		loop_through_cursors(vm);
 		performe_check(vm);
-
-		if (vm->cycles == 100) // just to stop the loop
+		loop_through_cursors(vm);
+		if (vm->dump_flag && vm->dump == vm->cycles)
 		{
-			printf("\n100 cycles \n");
-			exit(0);
+			dump_arena(vm->colosseum, MEM_SIZE);
+			free_nd_exit(vm, NULL);
 		}
 	}
-
+	if (!vm->the_conqueror)
+		vm->the_conqueror =
+				get_gldtor_by_id(vm->gladiators, vm->nbr_of_gldtors);
+	printf("Contestant %d, \"%s\", has won !\n", vm->the_conqueror->id,
+								vm->the_conqueror->prog_name);
+	free_nd_exit(vm, NULL);
 }

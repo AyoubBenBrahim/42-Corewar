@@ -6,34 +6,35 @@
 /*   By: aybouras <aybouras@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 12:55:52 by aybouras          #+#    #+#             */
-/*   Updated: 2021/02/15 11:24:27 by aybouras         ###   ########.fr       */
+/*   Updated: 2021/03/25 11:54:21 by aybouras         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/cor.h"
+#include "../inc/cor.h"
 
-
-void vm_init(t_vm *vm)
+void	vm_init(t_vm *vm)
 {
 	ft_bzero(vm, sizeof(t_vm));
-	if (!(vm->colosseum = (u_int8_t *)malloc(sizeof(u_int8_t) * (MEM_SIZE + 1))))
+	if (!(vm->colosseum = (u_int8_t *)malloc(sizeof(u_int8_t) *
+												(MEM_SIZE + 1))))
 	{
-		ft_putendl_fd("Failed to build the colosseum", 2);
+		ft_putendl_fd("Failed to build the Colosseum", 2);
 		exit(1);
 	}
 	ft_bzero(vm->colosseum, sizeof(vm->colosseum));
-	// vm->gladiators = NULL;
-	// vm->nbr_of_gldtors = 0;
-	// vm->the_conqueror = NULL;
-	// vm->cursors = NULL;
+	init_op_tab(op_tab);
 	vm->cycles = 0;
 	vm->cycles_to_die = CYCLE_TO_DIE;
 	vm->n_id = -1;
-	vm->last_id = 1;
-	// vm->cycles_after_check = 0;
+	vm->last_id_gld = 1;
+	vm->dump_flag = FALSE;
+	vm->the_conqueror = NULL;
+	vm->cursors_counter = 0;
+	vm->last_cursor_id = 1;
+	vm->lives_counter = 0;
 }
 
-void	prepare_battleground(t_vm	*vm)
+void	prepare_battleground(t_vm *vm)
 {
 	int			id;
 	int			mem_zone;
@@ -47,12 +48,7 @@ void	prepare_battleground(t_vm	*vm)
 	{
 		cursor = init_cursor(vm, id, mem_zone);
 		load_cursor(&(vm->cursors), cursor);
-		vm->cursors_counter++;
 		mem_zone += size;
 		id++;
 	}
 }
-
-// p1:  p = 0
-// p2:  p = 0 + 1365
-// p3:  p = 1365 + 1365 = 2730
