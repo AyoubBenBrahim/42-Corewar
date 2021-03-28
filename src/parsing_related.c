@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_related.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aybouras <aybouras@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aait-ihi <aait-ihi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 12:55:26 by aybouras          #+#    #+#             */
-/*   Updated: 2021/03/25 12:04:06 by aybouras         ###   ########.fr       */
+/*   Updated: 2021/03/28 16:18:04 by aait-ihi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cor.h"
+
+void	parse_arg_verbo(int *ac, int argc, char **argv, t_vm *vm)
+{
+	if (*ac + 1 <= argc)
+	{
+		if (!is_number(argv[*ac + 1]))
+			free_nd_exit(vm, "Error: invalid parameter");
+		vm->verbo = ft_atoi(argv[*ac + 1]);
+		vm->verbo_flag = TRUE;
+		if (vm->verbo < 0)
+			free_nd_exit(vm, "Error: invalid number");
+		*ac = *ac + 1;
+		return ;
+	}
+	free_nd_exit(vm, "Error: invalid parameters");
+}
 
 void	parse_arg_dump(int *ac, int argc, char **argv, t_vm *vm)
 {
@@ -113,6 +129,8 @@ void	parse_args(int argc, char **argv, t_vm *vm)
 	{
 		if (!ft_strcmp("-dump", argv[ac]) || argv[ac][1] == 'd')
 			parse_arg_dump(&ac, argc, argv, vm);
+		else if (!ft_strcmp("-v", argv[ac]))
+			parse_arg_verbo(&ac, argc, argv, vm);
 		else if ((cor = ft_strstr(argv[ac], ".cor"))
 					&& cor != argv[ac] && !cor[4])
 			parse_file(vm, ac, argv);

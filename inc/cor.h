@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cor.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aybouras <aybouras@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aait-ihi <aait-ihi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 11:44:08 by aybouras          #+#    #+#             */
-/*   Updated: 2021/03/26 14:44:45 by aybouras         ###   ########.fr       */
+/*   Updated: 2021/03/28 16:21:05 by aait-ihi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@
 
 # define FOUR_BYTES 4
 # define MAX_DUMP 64
+
+#define SHOW_LIVE 1
+#define SHOW_CYCLE 2
+#define SHOW_OPERATION 4
+#define SHOW_DEATHS 8
+#define SHOW_PC 8
 
 typedef enum			e_boolean
 {
@@ -42,20 +48,6 @@ typedef struct			s_gladiator
 	struct s_gladiator	*next;
 }						t_gladiator;
 
-typedef struct			s_op
-{
-	char				code;
-	const char			*name;
-	char				arg_num;
-	char				arg[3];
-	short				waiting_cycle;
-	t_boolean			arg_code;
-	t_boolean			carry;
-	int					size_dir;
-	int					mod;
-	int					op_type;
-}						t_op;
-
 typedef struct			s_op_component
 {
 	int					code;
@@ -63,8 +55,6 @@ typedef struct			s_op_component
 	int					arg[4];
 	int					step;
 }						t_op_component;
-
-t_op					op_tab[17];
 
 typedef	struct			s_cursor
 {
@@ -99,11 +89,28 @@ typedef struct			s_vm
 	int					lives_counter;
 	int					dump;
 	t_boolean			dump_flag;
+	int					verbo;
+	t_boolean			verbo_flag;
 	int					total_cycles;
 	int					total_lives;
 	int					fd;
 	u_int32_t			expected_exec_size;
 }						t_vm;
+
+typedef struct			s_op
+{
+	char				code;
+	const char			*name;
+	char				arg_num;
+	char				arg[3];
+	short				waiting_cycle;
+	t_boolean			arg_code;
+	int					size_dir;
+	int					mod;
+	void				(*op)(t_cursor *prc, t_op_component *cmp, t_vm *vm);
+}						t_op;
+
+t_op					op_tab[17];
 
 u_int32_t				little_to_big_endian(unsigned int x);
 void					vm_init(t_vm *vm);
@@ -120,7 +127,6 @@ t_boolean				parse_operation(t_vm *vm, t_cursor *prc);
 void					logical_op(t_cursor *prc, t_op_component *cmp);
 void					fork_op(t_cursor *prc, t_op_component *cmp, t_vm *vm);
 void					mem_op(t_cursor *prc, t_op_component *cmp, t_vm *vm);
-int						live(t_vm *vm, t_cursor *prc);
 void					set_carry(t_cursor *prc, t_op_component *cmp);
 void					set_mem(unsigned char *mem, int addr, int val, int oct);
 int						get_mem(unsigned char *mem, int addr, int oct);
@@ -133,7 +139,6 @@ void					parse_helper(t_vm *vm);
 void					print_colosseum(t_vm *v);
 void					free_nd_exit(t_vm *vm, char *msg);
 t_cursor				*kill_cursor(t_vm *vm, t_cursor *this, t_cursor *prev);
-int						get_tdir(t_vm *vm, t_cursor *prc, int pc);
 void					parse_magic_header(t_vm *vm, t_gladiator *gldtor,
 											u_int8_t *buffer);
 void					parse_champ_name(t_vm *vm, t_gladiator *gldtor,
@@ -144,5 +149,26 @@ void					parse_comment(t_vm *vm, t_gladiator *gldtor,
 													u_int8_t *buffer);
 void					parse_exec_code(t_vm *vm, t_gladiator *gldtor,
 													u_int8_t *buffer);
-int						ft_idx_mod(long n);
+int						idx_mod(long n);
+char					get_arg_code(int args_code, int arg_num);
+
+void					op_live(t_cursor *prc, t_op_component *cmp, t_vm *vm);
+void					op_ld(t_cursor *prc, t_op_component *cmp, t_vm *vm);
+void					op_st(t_cursor *prc, t_op_component *cmp, t_vm *vm);
+void					op_add(t_cursor *prc, t_op_component *cmp, t_vm *vm);
+void					op_sub(t_cursor *prc, t_op_component *cmp, t_vm *vm);
+void					op_and(t_cursor *prc, t_op_component *cmp, t_vm *vm);
+void					op_or(t_cursor *prc, t_op_component *cmp, t_vm *vm);
+void					op_xor(t_cursor *prc, t_op_component *cmp, t_vm *vm);
+void					op_zjmp(t_cursor *prc, t_op_component *cmp, t_vm *vm);
+void					op_ldi(t_cursor *prc, t_op_component *cmp, t_vm *vm);
+void					op_sti(t_cursor *prc, t_op_component *cmp, t_vm *vm);
+void					op_fork(t_cursor *prc, t_op_component *cmp, t_vm *vm);
+void					op_lld(t_cursor *prc, t_op_component *cmp, t_vm *vm);
+void					op_lldi(t_cursor *prc, t_op_component *cmp, t_vm *vm);
+void					op_aff(t_cursor *prc, t_op_component *cmp, t_vm *vm);
+
+void 					print_operation(t_cursor *prc, t_op_component *cmp);
+
+
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   let_the_game_begin.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aybouras <aybouras@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aait-ihi <aait-ihi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 11:23:32 by aybouras          #+#    #+#             */
-/*   Updated: 2021/03/25 09:47:24 by aybouras         ###   ########.fr       */
+/*   Updated: 2021/03/28 16:10:51 by aait-ihi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,9 @@ void	exec_operation(t_vm *vm, t_cursor *prc)
 		prc->cur_addr = addr_overlap(prc->cur_addr + get_op_size(prc));
 		return ;
 	}
-	if (op_tab[prc->cmp.code].op_type == 1)
-		logical_op(prc, &prc->cmp);
-	else if (op_tab[prc->cmp.code].op_type == 2)
-		fork_op(prc, &prc->cmp, vm);
-	else if (op_tab[prc->cmp.code].op_type == 3)
-		mem_op(prc, &prc->cmp, vm);
-	else
-		live(vm, prc);
-	op_tab[prc->cmp.code].carry ? set_carry(prc, &prc->cmp) : 0;
+	op_tab[prc->cmp.code].op(prc, &prc->cmp, vm);
+	if (vm->verbo_flag && vm->verbo & SHOW_OPERATION)
+		print_operation(prc, &prc->cmp);
 	prc->cur_addr = addr_overlap(prc->cur_addr + prc->cmp.step);
 }
 

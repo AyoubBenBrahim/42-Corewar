@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operations.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aybouras <aybouras@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aait-ihi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 12:06:37 by aybouras          #+#    #+#             */
-/*   Updated: 2021/03/27 12:08:49 by aybouras         ###   ########.fr       */
+/*   Updated: 2021/03/28 01:26:06 by aait-ihi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,32 +65,32 @@ void	mem_op(t_cursor *prc, t_op_component *cmp, t_vm *vm)
 	if (cmp->code == 10)
 	{
 		prc->reg[cmp->arg[2]] = get_mem(vm->colosseum,
-			ft_idx_mod((int)(prc->cur_addr + cmp->arg[0] + cmp->arg[1])), 4);
+			idx_mod((int)(prc->cur_addr + cmp->arg[0] + cmp->arg[1])), 4);
 	}
 	if (cmp->code == 14)
 		prc->reg[cmp->arg[2]] = get_mem(vm->colosseum,
 					prc->cur_addr + (cmp->arg[0] + cmp->arg[1]) % IDX_MOD, 4);
 }
 
-int		live(t_vm *vm, t_cursor *prc)
-{
-	t_gladiator *gladiator;
+// int		live(t_vm *vm, t_cursor *prc)
+// {
+// 	t_gladiator *gladiator;
 
-	vm->lives_counter++;
-	prc->is_alive = TRUE;
-	if (between(prc->cmp.arg[0], -4, -1))
-	{
-		gladiator = get_gldtor_by_id(vm->gladiators, prc->cmp.arg[0] * (-1));
-		if (gladiator)
-		{
-			gladiator->last_live = vm->cycles + 1;
-			gladiator->lives++;
-			vm->the_conqueror = gladiator;
-			vm->total_lives++;
-		}
-	}
-	return (prc->cmp.arg[0]);
-}
+// 	vm->lives_counter++;
+// 	prc->is_alive = TRUE;
+// 	if (between(prc->cmp.arg[0], -4, -1))
+// 	{
+// 		gladiator = get_gldtor_by_id(vm->gladiators, prc->cmp.arg[0] * (-1));
+// 		if (gladiator)
+// 		{
+// 			gladiator->last_live = vm->cycles + 1;
+// 			gladiator->lives++;
+// 			vm->the_conqueror = gladiator;
+// 			vm->total_lives++;
+// 		}
+// 	}
+// 	return (prc->cmp.arg[0]);
+// }
 
 void	set_carry(t_cursor *prc, t_op_component *cmp)
 {

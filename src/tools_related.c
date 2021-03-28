@@ -3,22 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   tools_related.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aybouras <aybouras@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aait-ihi <aait-ihi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 12:55:44 by aybouras          #+#    #+#             */
-/*   Updated: 2021/03/25 11:57:23 by aybouras         ###   ########.fr       */
+/*   Updated: 2021/03/28 16:26:20 by aait-ihi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cor.h"
 
-int		ft_idx_mod(long n)
+int		idx_mod(long n)
 {
 	int mod;
 
 	mod = n % IDX_MOD;
-	if (n < 0)
-		return (mod - IDX_MOD);
 	return (mod);
 }
 
