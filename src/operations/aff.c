@@ -15,6 +15,6 @@
 void op_aff(t_cursor *prc, t_op_component *cmp, t_vm *vm)
 {
 	(void)vm;
-	if(FALSE)
+	if (FALSE)
 		printf("%c", prc->reg[cmp->arg[0]]);
 }

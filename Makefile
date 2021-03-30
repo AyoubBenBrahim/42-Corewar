@@ -27,7 +27,6 @@ SRC_FILES = cursor_related.o\
 			player_related.o\
 			tools_related.o\
 			vm_related.o\
-			verbosity.o\
 
 OP_FILES = 	operations/add.o\
 			operations/aff.o\
@@ -44,12 +43,14 @@ OP_FILES = 	operations/add.o\
 			operations/sub.o\
 			operations/xor.o\
 			operations/zjmp.o\
+			verbosity/print_operation.o\
+			verbosity/verbosity_levels.o
 
 OBJ_SRC = $(addprefix $(OBJ_DIR)/, $(SRC_FILES))
 OBJ_OP = $(addprefix $(OBJ_DIR)/, $(OP_FILES))
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 INC = -I $(INC_DIR) -I $(LIBFT_INC)
 
 C_RED = \033[31m

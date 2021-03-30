@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cor.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-ihi <aait-ihi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-ihi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 11:44:08 by aybouras          #+#    #+#             */
-/*   Updated: 2021/03/28 16:21:05 by aait-ihi         ###   ########.fr       */
+/*   Updated: 2021/03/29 01:19:22 by aait-ihi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,28 @@
 #define SHOW_CYCLE 2
 #define SHOW_OPERATION 4
 #define SHOW_DEATHS 8
-#define SHOW_PC 8
+#define SHOW_PC 16
+
+typedef enum			e_operation
+{
+	OP_NULL,
+	OP_LIVE,
+	OP_LD,
+	OP_ST,
+	OP_ADD,
+	OP_SUB,
+	OP_AND,
+	OP_OR,
+	OP_XOR,
+	OP_ZJMP,
+	OP_LDI,
+	OP_STI,
+	OP_FORK,
+	OP_LLD,
+	OP_LLDI,
+	OP_LFORK,
+	OP_AFF
+}						t_operation;
 
 typedef enum			e_boolean
 {
@@ -67,6 +88,7 @@ typedef	struct			s_cursor
 	int					reg[REG_NUMBER + 1];
 	t_op_component		cmp;
 	t_boolean			is_alive;
+	long				last_live;
 	struct s_cursor		*next;
 }						t_cursor;
 
@@ -169,6 +191,11 @@ void					op_lldi(t_cursor *prc, t_op_component *cmp, t_vm *vm);
 void					op_aff(t_cursor *prc, t_op_component *cmp, t_vm *vm);
 
 void 					print_operation(t_cursor *prc, t_op_component *cmp);
-
+void					print_pc(t_cursor *prc, t_op_component *cmp, t_vm *vm);
+void					print_store_addr_details(t_cursor *prc, t_op_component *cmp);
+void					print_load_addr_details(t_cursor *prc, t_op_component *cmp);
+void					print_addr_details(t_cursor *prc, t_op_component *cmp);
+void					print_args(t_cursor *prc, t_op_component *cmp);
+void					print_lives(t_gladiator *gldtor);
 
 #endif

@@ -16,10 +16,10 @@ void op_xor(t_cursor *prc, t_op_component *cmp, t_vm *vm)
 {
 	const int arg1_is_register = get_arg_code(cmp->arg_code, 0) == T_REG;
 	const int arg2_is_register = get_arg_code(cmp->arg_code, 1) == T_REG;
-	const int value1 = arg1_is_register ? prc->reg[cmp->arg[0]] : cmp->arg[0];
-	const int value2 = arg2_is_register ? prc->reg[cmp->arg[1]] : cmp->arg[1];
+	cmp->arg[0] = arg1_is_register ? prc->reg[cmp->arg[0]] : cmp->arg[0];
+	cmp->arg[1] = arg2_is_register ? prc->reg[cmp->arg[1]] : cmp->arg[1];
 
 	(void)vm;
-	prc->reg[cmp->arg[2]] = value1 ^ value2;
+	prc->reg[cmp->arg[2]] = cmp->arg[0] ^ cmp->arg[1];
 	prc->carry = prc->reg[cmp->arg[2]] == 0;
 }

@@ -6,7 +6,7 @@
 /*   By: aait-ihi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 10:01:45 by aybouras          #+#    #+#             */
-/*   Updated: 2021/03/28 03:05:38 by aait-ihi         ###   ########.fr       */
+/*   Updated: 2021/03/29 00:32:56 by aait-ihi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char		get_arg_code(int args_code, int arg_num)
 {
-	char arg = args_code >> (6 - arg_num * 2) & 3;
+	char arg = (args_code >> (6 - arg_num * 2)) & 3;
 	return (arg + (arg == 3));
 }
 

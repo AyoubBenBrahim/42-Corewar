@@ -72,26 +72,6 @@ void	mem_op(t_cursor *prc, t_op_component *cmp, t_vm *vm)
 					prc->cur_addr + (cmp->arg[0] + cmp->arg[1]) % IDX_MOD, 4);
 }
 
-// int		live(t_vm *vm, t_cursor *prc)
-// {
-// 	t_gladiator *gladiator;
-
-// 	vm->lives_counter++;
-// 	prc->is_alive = TRUE;
-// 	if (between(prc->cmp.arg[0], -4, -1))
-// 	{
-// 		gladiator = get_gldtor_by_id(vm->gladiators, prc->cmp.arg[0] * (-1));
-// 		if (gladiator)
-// 		{
-// 			gladiator->last_live = vm->cycles + 1;
-// 			gladiator->lives++;
-// 			vm->the_conqueror = gladiator;
-// 			vm->total_lives++;
-// 		}
-// 	}
-// 	return (prc->cmp.arg[0]);
-// }
-
 void	set_carry(t_cursor *prc, t_op_component *cmp)
 {
 	if (cmp->code == 2 || cmp->code == 3)

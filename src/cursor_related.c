@@ -16,6 +16,9 @@ t_cursor	*kill_cursor(t_vm *vm, t_cursor *this, t_cursor *prev)
 {
 	t_cursor *temp;
 
+	if (vm->verbo_flag && vm->verbo & SHOW_DEATHS)
+		printf("Process %d hasn't lived for %ld cycles (CTD %d)\n",
+				this->id,  vm->total_cycles - this->last_live - 1, vm->cycles_to_die);
 	if (prev == NULL)
 		vm->cursors = this->next;
 	else

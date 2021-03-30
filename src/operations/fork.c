@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fork.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-ihi <aait-ihi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-ihi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 16:28:19 by aait-ihi          #+#    #+#             */
-/*   Updated: 2021/03/27 17:01:41 by aait-ihi         ###   ########.fr       */
+/*   Updated: 2021/03/28 23:53:14 by aait-ihi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void op_fork(t_cursor *prc, t_op_component *cmp, t_vm *vm)
 	int			cur_addr;
 
 	if (prc->cmp.code == 12)
-		cur_addr = addr_overlap(prc->cur_addr + cmp->arg[0] % IDX_MOD);
+		cur_addr = addr_overlap(prc->cur_addr + idx_mod(cmp->arg[0]));
 	else
 		cur_addr = addr_overlap(prc->cur_addr + cmp->arg[0]);
 	if (!(new = (t_cursor *)malloc(sizeof(t_cursor))))
