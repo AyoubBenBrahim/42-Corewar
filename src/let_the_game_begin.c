@@ -3,27 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   let_the_game_begin.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-ihi <aait-ihi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aaitihia <aaitihia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 11:23:32 by aybouras          #+#    #+#             */
-/*   Updated: 2021/03/29 19:56:26 by aait-ihi         ###   ########.fr       */
+/*   Updated: 2021/03/31 13:44:48 by aybouras         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cor.h"
 
-void	exec_operation(t_vm *vm, t_cursor *prc)
+void		exec_operation(t_vm *vm, t_cursor *prc)
 {
-	if(vm->total_cycles == 24985 && prc->id == 307)
-	{
-		printf("hhhhhh chditk\n");
-	}
-
 	if (!parse_operation(vm, prc))
 		prc->cmp.step = get_op_size(prc);
-	else if(prc->cmp.code != OP_AFF)
+	else if (prc->cmp.code != OP_AFF || vm->is_aff)
 	{
-		op_tab[prc->cmp.code].op(prc, &prc->cmp, vm);
+		g_op_tab[prc->cmp.code].op(prc, &prc->cmp, vm);
 		if (vm->verbo_flag && vm->verbo & SHOW_OPERATION)
 			print_operation(prc, &prc->cmp);
 	}
@@ -32,27 +27,33 @@ void	exec_operation(t_vm *vm, t_cursor *prc)
 	prc->cur_addr = addr_overlap(prc->cur_addr + prc->cmp.step);
 }
 
-void	check_who_is_alive(t_vm *vm)
+void		remove_inactive_proc(t_vm *vm)
 {
-	t_cursor *this;
-	t_cursor *prev;
+	t_cursor **this;
+	t_cursor *to_free;
 
-	this = vm->cursors;
-	prev = NULL;
-	while (this)
+	this = &vm->cursors;
+	while (*this)
 	{
-		if (!this->is_alive)
-			this = kill_cursor(vm, this, prev);
+		if (!(*this)->is_alive || vm->cycles_to_die <= 0)
+		{
+			if (vm->verbo_flag && vm->verbo & SHOW_DEATHS)
+				ft_printf("Process %d hasn't lived for %ld cycles (CTD %d)\n",
+	(*this)->id, vm->total_cycles - (*this)->last_live - 1, vm->cycles_to_die);
+			to_free = *this;
+			*this = to_free->next;
+			free(to_free);
+			vm->cursors_counter--;
+		}
 		else
 		{
-			this->is_alive = FALSE;
-			prev = this;
-			this = this->next;
+			(*this)->is_alive = FALSE;
+			this = &(*this)->next;
 		}
 	}
 }
 
-void	loop_through_cursors(t_vm *vm)
+void		loop_through_cursors(t_vm *vm)
 {
 	t_cursor	*cursor;
 
@@ -77,48 +78,45 @@ void	loop_through_cursors(t_vm *vm)
 	vm->total_cycles++;
 }
 
-void	performe_check(t_vm *vm)
+t_boolean	performe_check(t_vm *vm)
 {
-	if (vm->cycles == vm->cycles_to_die)
+	if (vm->cycles == vm->cycles_to_die || vm->cycles_to_die <= 0)
 	{
-
 		vm->count_live_checks++;
-		check_who_is_alive(vm);
-
+		remove_inactive_proc(vm);
 		if (vm->lives_counter >= NBR_LIVE
 							|| vm->count_live_checks == MAX_CHECKS)
 		{
 			vm->count_live_checks = 0;
 			vm->cycles_to_die -= CYCLE_DELTA;
 			if (vm->verbo_flag && vm->verbo & SHOW_CYCLE)
-				printf("Cycle to die is now %d\n", vm->cycles_to_die);
+				ft_printf("Cycle to die is now %d\n", vm->cycles_to_die);
 		}
 		vm->lives_counter = 0;
 		vm->cycles = 0;
 	}
+	return (TRUE);
 }
 
-void	let_the_game_begin(t_vm *vm)
+void		let_the_game_begin(t_vm *vm)
 {
-	while (vm->cycles_to_die > 0 && vm->cursors_counter > 0)
-	{	
-		performe_check(vm);
+	while (performe_check(vm) && vm->cursors)
+	{
 		if (vm->verbo_flag && vm->verbo & SHOW_CYCLE)
-		{
-			printf("It is now cycle %d\n", vm->total_cycles + 1);
-			// printf("Cycle to die is now %d\n", vm->cycles_to_die);
-		}
+			ft_printf("It is now cycle %d\n", vm->total_cycles + 1);
 		loop_through_cursors(vm);
-		if (vm->dump_flag && vm->dump == vm->cycles)
+		if (vm->dump_flag && vm->dump <= vm->total_cycles)
 		{
 			dump_arena(vm->colosseum, MEM_SIZE);
-			free_nd_exit(vm, NULL);
+			vm->dump_times--;
+			if (vm->dump_times < 0)
+				free_nd_exit(vm, NULL);
 		}
 	}
 	if (!vm->the_conqueror)
 		vm->the_conqueror =
 				get_gldtor_by_id(vm->gladiators, vm->nbr_of_gldtors);
-	printf("Contestant %d, \"%s\", has won !\n", vm->the_conqueror->id,
+	ft_printf("Contestant %d, \"%s\", has won !\n", vm->the_conqueror->id,
 								vm->the_conqueror->prog_name);
 	free_nd_exit(vm, NULL);
 }

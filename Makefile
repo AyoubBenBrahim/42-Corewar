@@ -1,15 +1,14 @@
 NAME = corewar
-LIBFT_FILE = libft.a
 
-LIBFT_DIR = ./libft
 SRC_DIR = ./src
 INC_DIR = ./inc/
 LIBFT_INC = $(LIBFT_DIR)/
 OBJ_DIR = ./obj
 
-LFLAG =
-
-LIBFT = $(LIBFT_DIR)/$(LIBFT_FILE)
+LIBFT = ./libft/libft.a
+LIBPRINTF = ./ft_printf/libftprintf.a
+LIBFT_DIR = ./libft
+LIBPRINTF_DIR = ./ft_printf
 
 HEADERS = $(INC_DIR)cor.h $(INC_DIR)op.h
 
@@ -24,6 +23,7 @@ SRC_FILES = cursor_related.o\
 			parse_operation.o\
 			parsing_related.o\
 			parsing_related_2.o\
+			parsing_related_3.o\
 			player_related.o\
 			tools_related.o\
 			vm_related.o\
@@ -50,7 +50,7 @@ OBJ_SRC = $(addprefix $(OBJ_DIR)/, $(SRC_FILES))
 OBJ_OP = $(addprefix $(OBJ_DIR)/, $(OP_FILES))
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra
 INC = -I $(INC_DIR) -I $(LIBFT_INC)
 
 C_RED = \033[31m
@@ -66,21 +66,28 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS)
 	@$(CC) $(CFLAGS) -c $(INC) $< -o $@
 	@printf "Corewar  %-25s$(C_GREEN)[done]$(C_NONE)\n" $@
 
-$(NAME): $(LIBFT) $(OBJ_SRC) $(OBJ_OP)
-	@$(CC) $(OBJ_SRC) $(OBJ_OP) $(LIBFT) -o $(NAME)
+$(NAME): $(LIBFT) $(LIBPRINTF) $(OBJ_SRC) $(OBJ_OP)
+	@$(CC) $(OBJ_SRC) $(OBJ_OP) $(LIBFT) $(LIBPRINTF) -o $(NAME)
 	@printf "Corewar  %-25s$(C_GREEN)[done]$(C_NONE)\n" $@
 
 lib:
 	@make -C $(LIBFT_DIR)
+	@make -C $(LIBPRINTF_DIR)
 
-clean:
-	@rm -rf $(OBJ_DIR)
+cleanlib:
 	@make -C $(LIBFT_DIR) clean
+	@make -C $(LIBPRINTF_DIR) clean
+
+fcleanlib:
+	@make -C $(LIBFT_DIR) fclean
+	@make -C $(LIBPRINTF_DIR) fclean
+
+clean: cleanlib
+	@rm -rf $(OBJ_DIR)
 	@printf "Corewar  %-25s$(C_RED)[done]$(C_NONE)\n" $@
 
-fclean: clean
+fclean: clean fcleanlib
 	@rm -rf $(NAME)
-	@make -C $(LIBFT_DIR) fclean
 	@printf "Corewar  %-25s$(C_RED)[done]$(C_NONE)\n" $@
 
 re: fclean all

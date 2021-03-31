@@ -11,7 +11,8 @@
 /* ************************************************************************** */
 
 #include "../inc/cor.h"
-void op_fork(t_cursor *prc, t_op_component *cmp, t_vm *vm)
+
+void	op_fork(t_cursor *prc, t_op_component *cmp, t_vm *vm)
 {
 	t_cursor	*new;
 	int			cur_addr;

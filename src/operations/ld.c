@@ -11,7 +11,8 @@
 /* ************************************************************************** */
 
 #include "../inc/cor.h"
-void op_ld(t_cursor *prc, t_op_component *cmp, t_vm *vm)
+
+void	op_ld(t_cursor *prc, t_op_component *cmp, t_vm *vm)
 {
 	(void)vm;
 	prc->reg[cmp->arg[1]] = cmp->arg[0];

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cor.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-ihi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aaitihia <aaitihia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 11:44:08 by aybouras          #+#    #+#             */
-/*   Updated: 2021/03/29 01:19:22 by aait-ihi         ###   ########.fr       */
+/*   Updated: 2021/03/31 14:10:49 by aybouras         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,18 @@
 # include <stdlib.h>
 # include "op.h"
 # include "../libft/inc/libft.h"
+# include "../ft_printf/inc/ft_printf.h"
 # include <fcntl.h>
-# include <stdio.h> // ************* delete
 # include <unistd.h>
 
 # define FOUR_BYTES 4
 # define MAX_DUMP 64
 
-#define SHOW_LIVE 1
-#define SHOW_CYCLE 2
-#define SHOW_OPERATION 4
-#define SHOW_DEATHS 8
-#define SHOW_PC 16
+# define SHOW_LIVE 1
+# define SHOW_CYCLE 2
+# define SHOW_OPERATION 4
+# define SHOW_DEATHS 8
+# define SHOW_PC 16
 
 typedef enum			e_operation
 {
@@ -111,9 +111,8 @@ typedef struct			s_vm
 	int					lives_counter;
 	int					dump;
 	t_boolean			dump_flag;
-	int					min_interval;
-	int					max_interval;
-	t_boolean			dump2_flag;
+	int					dump_times;
+	t_boolean			is_aff;
 	int					verbo;
 	t_boolean			verbo_flag;
 	int					total_cycles;
@@ -135,7 +134,7 @@ typedef struct			s_op
 	void				(*op)(t_cursor *prc, t_op_component *cmp, t_vm *vm);
 }						t_op;
 
-t_op					op_tab[17];
+t_op					g_op_tab[17];
 
 u_int32_t				little_to_big_endian(unsigned int x);
 void					vm_init(t_vm *vm);
@@ -168,7 +167,7 @@ void					parse_magic_header(t_vm *vm, t_gladiator *gldtor,
 											u_int8_t *buffer);
 void					parse_champ_name(t_vm *vm, t_gladiator *gldtor,
 											u_int8_t *buffer);
-void						parse_exec_code_size(t_vm *vm, t_gladiator *gldtor,
+void					parse_exec_code_size(t_vm *vm, t_gladiator *gldtor,
 													u_int8_t *buffer);
 void					parse_comment(t_vm *vm, t_gladiator *gldtor,
 													u_int8_t *buffer);
@@ -176,7 +175,6 @@ void					parse_exec_code(t_vm *vm, t_gladiator *gldtor,
 													u_int8_t *buffer);
 int						idx_mod(long n);
 char					get_arg_code(int args_code, int arg_num);
-
 void					op_live(t_cursor *prc, t_op_component *cmp, t_vm *vm);
 void					op_ld(t_cursor *prc, t_op_component *cmp, t_vm *vm);
 void					op_st(t_cursor *prc, t_op_component *cmp, t_vm *vm);
@@ -192,13 +190,19 @@ void					op_fork(t_cursor *prc, t_op_component *cmp, t_vm *vm);
 void					op_lld(t_cursor *prc, t_op_component *cmp, t_vm *vm);
 void					op_lldi(t_cursor *prc, t_op_component *cmp, t_vm *vm);
 void					op_aff(t_cursor *prc, t_op_component *cmp, t_vm *vm);
-
-void 					print_operation(t_cursor *prc, t_op_component *cmp);
+void					print_operation(t_cursor *prc, t_op_component *cmp);
 void					print_pc(t_cursor *prc, t_op_component *cmp, t_vm *vm);
-void					print_store_addr_details(t_cursor *prc, t_op_component *cmp);
-void					print_load_addr_details(t_cursor *prc, t_op_component *cmp);
-void					print_addr_details(t_cursor *prc, t_op_component *cmp);
+void					print_store_addr_details(t_cursor *prc,
+													t_op_component *cmp);
+void					print_load_addr_details(t_cursor *prc,
+													t_op_component *cmp);
+void					print_addr_details(t_cursor *prc,
+													t_op_component *cmp);
 void					print_args(t_cursor *prc, t_op_component *cmp);
 void					print_lives(t_gladiator *gldtor);
-
+void					parse_arg_dump(int *ac, int argc, char **argv,
+													t_vm *vm);
+void					parse_dump_time(int *ac, int argc, char **argv,
+													t_vm *vm);
+t_boolean				is_valide(int n);
 #endif

@@ -6,7 +6,7 @@
 /*   By: aybouras <aybouras@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 12:54:26 by aybouras          #+#    #+#             */
-/*   Updated: 2021/03/25 09:55:51 by aybouras         ###   ########.fr       */
+/*   Updated: 2021/03/31 13:35:29 by aybouras         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ t_cursor	*kill_cursor(t_vm *vm, t_cursor *this, t_cursor *prev)
 	t_cursor *temp;
 
 	if (vm->verbo_flag && vm->verbo & SHOW_DEATHS)
-		printf("Process %d hasn't lived for %ld cycles (CTD %d)\n",
-				this->id,  vm->total_cycles - this->last_live - 1, vm->cycles_to_die);
+		ft_printf("Process %d hasn't lived for %ld cycles (CTD %d)\n",
+				this->id, vm->total_cycles - this->last_live - 1,
+				vm->cycles_to_die);
 	if (prev == NULL)
 		vm->cursors = this->next;
 	else

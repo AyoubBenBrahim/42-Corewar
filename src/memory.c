@@ -20,12 +20,12 @@ static void	dump_hex(unsigned char *memory)
 	i = 0;
 	while (i < MAX_DUMP)
 	{
-		printf("%c", tab[memory[i] / 16]);
-		printf("%c", tab[memory[i] % 16]);
-		i < MAX_DUMP - 1 ? printf(" ") : 0;
+		ft_printf("%c", tab[memory[i] / 16]);
+		ft_printf("%c", tab[memory[i] % 16]);
+		i < MAX_DUMP - 1 ? ft_printf(" ") : 0;
 		i++;
 	}
-	printf(" \n");
+	ft_printf(" \n");
 }
 
 void		dump_arena(unsigned char *memory, int size)
@@ -35,7 +35,7 @@ void		dump_arena(unsigned char *memory, int size)
 	i = 0;
 	while (i < size)
 	{
-		i == 0 ? printf("0x0000 : ") : printf("%#.4x : ", i);
+		i == 0 ? ft_printf("0x0000 : ") : ft_printf("%#.4x : ", i);
 		dump_hex(memory + i);
 		i += MAX_DUMP;
 	}

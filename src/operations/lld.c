@@ -11,7 +11,8 @@
 /* ************************************************************************** */
 
 #include "../inc/cor.h"
-void op_lld(t_cursor *prc, t_op_component *cmp, t_vm *vm)
+
+void	op_lld(t_cursor *prc, t_op_component *cmp, t_vm *vm)
 {
 	op_ld(prc, cmp, vm);
 }

@@ -20,24 +20,8 @@ void	parse_arg_verbo(int *ac, int argc, char **argv, t_vm *vm)
 			free_nd_exit(vm, "Error: invalid parameter");
 		vm->verbo = ft_atoi(argv[*ac + 1]);
 		vm->verbo_flag = TRUE;
-		if (vm->verbo < 0)
-			free_nd_exit(vm, "Error: invalid number");
-		*ac = *ac + 1;
-		return ;
-	}
-	free_nd_exit(vm, "Error: invalid parameters");
-}
-
-void	parse_arg_dump(int *ac, int argc, char **argv, t_vm *vm)
-{
-	if (*ac + 1 <= argc)
-	{
-		if (!is_number(argv[*ac + 1]))
-			free_nd_exit(vm, "Error: invalid parameter");
-		vm->dump = ft_atoi(argv[*ac + 1]);
-		vm->dump_flag = TRUE;
-		if (vm->dump < 0)
-			free_nd_exit(vm, "Error: invalid number");
+		if (vm->verbo < 0 || !is_valide(vm->verbo))
+			free_nd_exit(vm, "Error: invalid level of Verbosity");
 		*ac = *ac + 1;
 		return ;
 	}
@@ -118,23 +102,6 @@ void	parse_file(t_vm *vm, int ac, char **argv)
 	}
 }
 
-void	parse_dump_interval(int *ac, int argc, char **argv, t_vm *vm)
-{
-	if (*ac + 2 <= argc)
-	{
-		if (!is_number(argv[*ac + 1]) || !is_number(argv[*ac + 2]))
-			free_nd_exit(vm, "Error: invalid parameter");
-		vm->min_interval = ft_atoi(argv[*ac + 1]);
-		vm->max_interval = ft_atoi(argv[*ac + 2]);
-		vm->dump2_flag = TRUE;
-		if (vm->dump < 0 || vm->max_interval <= vm->min_interval)
-			free_nd_exit(vm, "Error: invalid number");
-		*ac = *ac + 2;
-		return ;
-	}
-	free_nd_exit(vm, "Error: invalid parameters");
-}
-
 void	parse_args(int argc, char **argv, t_vm *vm)
 {
 	int			ac;
@@ -146,8 +113,10 @@ void	parse_args(int argc, char **argv, t_vm *vm)
 	{
 		if (!ft_strcmp("-dump", argv[ac]) || !ft_strcmp("-d", argv[ac]))
 			parse_arg_dump(&ac, argc, argv, vm);
-		else if (!ft_strcmp("-dump2", argv[ac]))
-			parse_dump_interval(&ac, argc, argv, vm);
+		else if (!ft_strcmp("-dt", argv[ac]))
+			parse_dump_time(&ac, argc, argv, vm);
+		else if (!ft_strcmp("-a", argv[ac]))
+			vm->is_aff = TRUE;
 		else if (!ft_strcmp("-v", argv[ac]))
 			parse_arg_verbo(&ac, argc, argv, vm);
 		else if ((cor = ft_strstr(argv[ac], ".cor"))

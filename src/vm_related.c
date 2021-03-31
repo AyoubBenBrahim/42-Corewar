@@ -22,7 +22,7 @@ void	vm_init(t_vm *vm)
 		exit(1);
 	}
 	ft_bzero(vm->colosseum, sizeof(vm->colosseum));
-	init_op_tab(op_tab);
+	init_op_tab(g_op_tab);
 	vm->cycles = 0;
 	vm->cycles_to_die = CYCLE_TO_DIE;
 	vm->n_id = -1;
