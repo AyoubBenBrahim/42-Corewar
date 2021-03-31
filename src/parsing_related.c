@@ -118,6 +118,23 @@ void	parse_file(t_vm *vm, int ac, char **argv)
 	}
 }
 
+void	parse_dump_interval(int *ac, int argc, char **argv, t_vm *vm)
+{
+	if (*ac + 2 <= argc)
+	{
+		if (!is_number(argv[*ac + 1]) || !is_number(argv[*ac + 2]))
+			free_nd_exit(vm, "Error: invalid parameter");
+		vm->min_interval = ft_atoi(argv[*ac + 1]);
+		vm->max_interval = ft_atoi(argv[*ac + 2]);
+		vm->dump2_flag = TRUE;
+		if (vm->dump < 0 || vm->max_interval <= vm->min_interval)
+			free_nd_exit(vm, "Error: invalid number");
+		*ac = *ac + 2;
+		return ;
+	}
+	free_nd_exit(vm, "Error: invalid parameters");
+}
+
 void	parse_args(int argc, char **argv, t_vm *vm)
 {
 	int			ac;
@@ -127,8 +144,10 @@ void	parse_args(int argc, char **argv, t_vm *vm)
 	vm->nbr_of_gldtors = 0;
 	while (ac < argc)
 	{
-		if (!ft_strcmp("-dump", argv[ac]) || argv[ac][1] == 'd')
+		if (!ft_strcmp("-dump", argv[ac]) || !ft_strcmp("-d", argv[ac]))
 			parse_arg_dump(&ac, argc, argv, vm);
+		else if (!ft_strcmp("-dump2", argv[ac]))
+			parse_dump_interval(&ac, argc, argv, vm);
 		else if (!ft_strcmp("-v", argv[ac]))
 			parse_arg_verbo(&ac, argc, argv, vm);
 		else if ((cor = ft_strstr(argv[ac], ".cor"))

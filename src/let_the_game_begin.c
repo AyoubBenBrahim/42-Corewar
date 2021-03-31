@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   let_the_game_begin.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-ihi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aait-ihi <aait-ihi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 11:23:32 by aybouras          #+#    #+#             */
-/*   Updated: 2021/03/29 02:07:59 by aait-ihi         ###   ########.fr       */
+/*   Updated: 2021/03/29 19:56:26 by aait-ihi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,19 @@
 
 void	exec_operation(t_vm *vm, t_cursor *prc)
 {
+	if(vm->total_cycles == 24985 && prc->id == 307)
+	{
+		printf("hhhhhh chditk\n");
+	}
+
 	if (!parse_operation(vm, prc))
 		prc->cmp.step = get_op_size(prc);
-	else
+	else if(prc->cmp.code != OP_AFF)
+	{
 		op_tab[prc->cmp.code].op(prc, &prc->cmp, vm);
-	if (vm->verbo_flag && vm->verbo & SHOW_OPERATION)
-		print_operation(prc, &prc->cmp);
+		if (vm->verbo_flag && vm->verbo & SHOW_OPERATION)
+			print_operation(prc, &prc->cmp);
+	}
 	if (vm->verbo_flag && vm->verbo & SHOW_PC)
 		print_pc(prc, &prc->cmp, vm);
 	prc->cur_addr = addr_overlap(prc->cur_addr + prc->cmp.step);
@@ -94,14 +101,14 @@ void	performe_check(t_vm *vm)
 void	let_the_game_begin(t_vm *vm)
 {
 	while (vm->cycles_to_die > 0 && vm->cursors_counter > 0)
-	{
+	{	
 		performe_check(vm);
-		loop_through_cursors(vm);
 		if (vm->verbo_flag && vm->verbo & SHOW_CYCLE)
 		{
-			printf("It is now cycle %d\n", vm->total_cycles);
+			printf("It is now cycle %d\n", vm->total_cycles + 1);
 			// printf("Cycle to die is now %d\n", vm->cycles_to_die);
 		}
+		loop_through_cursors(vm);
 		if (vm->dump_flag && vm->dump == vm->cycles)
 		{
 			dump_arena(vm->colosseum, MEM_SIZE);

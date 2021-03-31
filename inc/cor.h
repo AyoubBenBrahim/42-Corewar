@@ -111,6 +111,9 @@ typedef struct			s_vm
 	int					lives_counter;
 	int					dump;
 	t_boolean			dump_flag;
+	int					min_interval;
+	int					max_interval;
+	t_boolean			dump2_flag;
 	int					verbo;
 	t_boolean			verbo_flag;
 	int					total_cycles;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_operation.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-ihi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aait-ihi <aait-ihi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 02:25:31 by aait-ihi          #+#    #+#             */
-/*   Updated: 2021/03/29 10:35:45 by aait-ihi         ###   ########.fr       */
+/*   Updated: 2021/03/29 19:14:12 by aait-ihi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ void	print_load_addr_details(t_cursor *prc, t_op_component *cmp)
 {
 	printf("%7s| -> load from %d + %d = %d (with pc and mod %d)\n",
 			"",
+			cmp->arg[0],
 			cmp->arg[1],
-			cmp->arg[2],
-			cmp->arg[2] + cmp->arg[1],
-			prc->cur_addr + idx_mod((cmp->arg[1] + cmp->arg[2]))
+			cmp->arg[1] + cmp->arg[0],
+			prc->cur_addr + idx_mod((cmp->arg[0] + cmp->arg[1]))
 		);
 }
 

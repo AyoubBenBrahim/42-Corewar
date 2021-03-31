@@ -5,14 +5,14 @@ void print_operation(t_cursor *prc, t_op_component *cmp)
 {
 	const t_op op = op_tab[cmp->code];
 
-	printf("P%5d | %s", prc->id, op.name);
+	printf("P %4d | %s", prc->id, op.name);
 	print_args(prc, cmp);
 	if(cmp->code == OP_ZJMP)
 		printf(" %s", prc->carry ? "OK" : "FAILED");
 	else if(cmp->code == OP_FORK)
-		printf(" (%d)",addr_overlap(prc->cur_addr + idx_mod(cmp->arg[0])));
+		printf(" (%d)", prc->cur_addr + idx_mod(cmp->arg[0]));
 	else if(cmp->code == OP_LFORK)
-		printf(" (%d)",addr_overlap(prc->cur_addr + cmp->arg[0]));
+		printf(" (%d)", prc->cur_addr + cmp->arg[0]);
 	printf("\n");
 	print_addr_details(prc, cmp);
 }
@@ -22,7 +22,7 @@ void print_pc(t_cursor *prc, t_op_component *cmp, t_vm *vm)
 	int i;
 
 	i = 0;
-	if(cmp->code == OP_ZJMP)
+	if(cmp->code == OP_ZJMP && prc->carry)
 		return;
 	printf("ADV %d (%s%#.4x -> %#.4x) ", cmp->step, prc->cur_addr ? "" : "0x",
 									prc->cur_addr, prc->cur_addr + cmp->step);
