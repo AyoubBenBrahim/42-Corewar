@@ -6,7 +6,7 @@
 /*   By: aybouras <aybouras@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 12:25:26 by aybouras          #+#    #+#             */
-/*   Updated: 2021/03/31 12:59:32 by aybouras         ###   ########.fr       */
+/*   Updated: 2021/04/01 09:50:14 by aybouras         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ void	print_pc(t_cursor *prc, t_op_component *cmp, t_vm *vm)
 	i = 0;
 	if (cmp->code == OP_ZJMP && prc->carry)
 		return ;
-	ft_printf("ADV %d (%s%#.4x -> %#.4x) ", cmp->step, prc->cur_addr ? "" : "0x",
+	ft_printf("ADV %d (%s%#.4x -> %#.4x) ",
+									cmp->step, prc->cur_addr ? "" : "0x",
 									prc->cur_addr, prc->cur_addr + cmp->step);
 	while (i < cmp->step)
 	{
